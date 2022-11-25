@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://Cube.gd" type="Script" id=1]
-[ext_resource path="res://texture/wall_cubemesh.tres" type="CubeMesh" id=2]
-
-[node name="MeshInstance" type="MeshInstance"]
-mesh = ExtResource( 2 )
-script = ExtResource( 1 )
