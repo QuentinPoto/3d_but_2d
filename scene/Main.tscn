@@ -1,0 +1,681 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://scene/Main.gd" type="Script" id=1]
+[ext_resource path="res://map_blocks/Cube.tscn" type="PackedScene" id=2]
+[ext_resource path="res://map_blocks/texture/earth_cubemesh.tres" type="CubeMesh" id=3]
+[ext_resource path="res://map_blocks/Sea.tscn" type="PackedScene" id=4]
+[ext_resource path="res://map_blocks/texture/stone_cubemesh.tres" type="CubeMesh" id=5]
+[ext_resource path="res://map_blocks/texture/png/wall.png" type="Texture" id=6]
+[ext_resource path="res://map_blocks/swapper.tscn" type="PackedScene" id=7]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scene/Camera.gd" type="Script" id=9]
+
+[sub_resource type="ProceduralSky" id=4]
+radiance_size = 0
+sky_horizon_color = Color( 1, 1, 1, 1 )
+ground_bottom_color = Color( 0.176471, 0.517647, 0.858824, 1 )
+ground_horizon_color = Color( 1, 1, 1, 1 )
+texture_size = 0
+
+[sub_resource type="Environment" id=3]
+background_sky = SubResource( 4 )
+background_color = Color( 0.243137, 0.25098, 0.376471, 1 )
+background_energy = 0.0
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.0
+glow_bloom = 0.02
+glow_blend_mode = 0
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_texture = ExtResource( 6 )
+emission_enabled = true
+emission = Color( 1, 0.913725, 0, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+uv1_scale = Vector3( 3, 2, 1 )
+
+[sub_resource type="CubeMesh" id=6]
+material = SubResource( 5 )
+size = Vector3( 1, 1, 1 )
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="SunUnder" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -16, 14 )
+light_color = Color( 0.568627, 0.603922, 1, 1 )
+light_energy = 0.7
+light_bake_mode = 0
+shadow_enabled = true
+shadow_bias = 2.0
+omni_range = 4096.0
+
+[node name="Sun" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 10, 17 )
+light_color = Color( 0.960784, 0.666667, 0.666667, 1 )
+light_energy = 2.53
+light_bake_mode = 0
+shadow_enabled = true
+shadow_bias = 2.0
+omni_range = 4096.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, -7, 17.378, 34.889 )
+projection = 1
+size = 10.0
+far = 500.0
+script = ExtResource( 9 )
+
+[node name="Cubes" type="Node" parent="."]
+
+[node name="Sea" parent="Cubes" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
+
+[node name="earth" type="Spatial" parent="Cubes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 7 )
+
+[node name="MeshInstance3" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance4" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance5" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance6" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 1 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance7" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance8" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 1 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance9" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance10" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance11" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance12" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance13" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance14" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance15" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance16" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance17" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance18" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 3 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance19" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 3 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance20" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 3 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance21" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance23" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance24" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 4 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance25" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance26" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 4 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance27" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance28" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance29" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance30" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance31" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance32" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance33" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance34" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance35" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance36" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance37" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance38" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance39" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance40" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance41" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance42" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance43" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance44" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance45" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance46" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance47" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance48" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance49" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance50" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance51" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 9 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance52" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 9 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance53" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 9 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance54" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 9 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance55" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 9 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance56" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 9 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance57" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 10 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance58" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 10 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance59" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 10 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance60" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 10 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance61" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 10 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance62" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 10 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance63" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 1 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance64" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 1 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance65" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 1 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance66" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 1 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance69" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance70" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance72" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance73" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance74" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 2 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance75" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 3 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance76" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 3 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance77" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 3 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance78" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 3 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance84" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 4 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance85" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 4 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance86" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 4 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance87" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance88" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance89" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance90" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance91" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance92" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 5 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance93" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance94" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance95" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance96" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance97" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance98" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 6 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance99" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance100" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance101" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance102" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance103" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance106" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance107" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance114" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance115" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance104" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 7 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance105" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance108" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance109" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance110" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 8 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance111" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 9 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance112" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 9 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance113" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 9 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance117" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance120" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 10 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance121" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 10 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance122" parent="Cubes/earth" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 10 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="stone" type="Spatial" parent="Cubes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 7 )
+
+[node name="MeshInstance" parent="Cubes/stone" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 5 )
+mesh = ExtResource( 5 )
+
+[node name="MeshInstance2" parent="Cubes/stone" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 6 )
+mesh = ExtResource( 5 )
+
+[node name="MeshInstance3" parent="Cubes/stone" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 7 )
+mesh = ExtResource( 5 )
+
+[node name="MeshInstance4" parent="Cubes/stone" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 8 )
+mesh = ExtResource( 5 )
+
+[node name="MeshInstance5" parent="Cubes/stone" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 5 )
+mesh = ExtResource( 5 )
+
+[node name="MeshInstance6" parent="Cubes/stone" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 6 )
+mesh = ExtResource( 5 )
+
+[node name="MeshInstance7" parent="Cubes/stone" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 7 )
+mesh = ExtResource( 5 )
+
+[node name="MeshInstance8" parent="Cubes/stone" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 8 )
+mesh = ExtResource( 5 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.70716, 10.6699, 6.42609 )
+visible = false
+omni_range = 20.0
+
+[node name="OmniLight2" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.61901, 5.66253, 9.65121 )
+visible = false
+omni_range = 20.0
+
+[node name="goal" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 2, 15 )
+mesh = SubResource( 6 )
+
+[node name="OmniLight" type="OmniLight" parent="goal"]
+light_color = Color( 0.968627, 1, 0, 1 )
+light_energy = 4.0
+shadow_enabled = true
+
+[node name="swapper" parent="." instance=ExtResource( 7 )]
+
+[node name="Player" parent="." instance=ExtResource( 8 )]
+transform = Transform( 0.707107, 0.407737, -0.645174, 0, 0.998749, 0.526782, 0.707107, -0.407737, 0.645174, 13, 1, 11 )
+
+[connection signal="player_action" from="Player" to="swapper" method="_on_Player_player_action"]
