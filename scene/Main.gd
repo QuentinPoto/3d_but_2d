@@ -6,25 +6,21 @@ onready var cubes = $Cubes
 onready var cube_src = load("res://map_blocks/Cube.tscn")
 var cubes_object = []
 
-# tableau par etage [y][x][z] (swap x et z ?)
+
+var cam_swapped = false
 
 """
-var level = [
-	[
-		[Cube.FLOOR, Cube.FLOOR, Cube.FLOOR, Cube.FLOOR, Cube.FLOOR],
-		[Cube.FLOOR, Cube.FLOOR, Cube.FLOOR, Cube.FLOOR, Cube.FLOOR],
-		[Cube.FLOOR, Cube.FLOOR, Cube.FLOOR, Cube.FLOOR, Cube.FLOOR],
-		[Cube.FLOOR, Cube.FLOOR, Cube.FLOOR, Cube.FLOOR, Cube.FLOOR],
-		[Cube.FLOOR, Cube.FLOOR, Cube.FLOOR, Cube.FLOOR, Cube.FLOOR],
-	],
-	[
-		[Cube.WALL,Cube.WALL,Cube.WALL,Cube.WALL,Cube.WALL],
-	],
-	[
-		[Cube.WALL,Cube.WALL,Cube.WALL,Cube.WALL,Cube.WALL],
-	]
-]
-"""
+
+func _process(delta):
+	pass
+	if SwapLogic.is_swapping and not cam_swapped:
+		$CameraDown.current = !$CameraDown.current
+		cam_swapped = true
+	if not SwapLogic.is_swapping:
+		cam_swapped = false
+
+
+# tableau par etage [y][x][z] (swap x et z ?)
 const level = [
 	[
 		[Cube.EARTH, Cube.EARTH, Cube.EARTH, Cube.EARTH, Cube.EARTH, Cube.EARTH, Cube.EARTH, Cube.EARTH, Cube.EARTH, Cube.EARTH, Cube.EARTH, Cube.EARTH, Cube.EARTH],
@@ -49,7 +45,7 @@ const level = [
 		[Cube.STONE,Cube.STONE,Cube.STONE,Cube.STONE,Cube.STONE],
 	]
 ]
-"""
+
 func _ready():
 	if ($Perpective != null):
 		$Perpective.current = true
@@ -66,15 +62,6 @@ func _ready():
 					cube.init(Vector3(x, y, z), cube_type)
 					map.push_back(cube) 
 	populate_cubes(map)
-"""
-func _input(event):
-	if event.is_action_pressed("perspective"):
-		if $Perpective == null:
-			return
-		if $Perpective.current:
-			$Orthogonal.current = true
-		else:
-			$Perpective.current = true
 
 func populate_cubes(map):
 	if len(map) == 0:
@@ -86,3 +73,4 @@ func populate_cubes(map):
 	for cube in map:
 		add_child(cube)
 		cube.translation = cube.pos * CUBE_SIZE * 2
+"""

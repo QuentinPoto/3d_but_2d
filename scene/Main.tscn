@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
 [ext_resource path="res://map_blocks/Cube.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://map_blocks/swapper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scene/Camera.gd" type="Script" id=9]
+[ext_resource path="res://map_blocks/texture/wall_cubemesh.tres" type="CubeMesh" id=10]
+[ext_resource path="res://circ.gd" type="Script" id=11]
 
 [sub_resource type="ProceduralSky" id=4]
 radiance_size = 0
@@ -39,6 +41,8 @@ uv1_scale = Vector3( 3, 2, 1 )
 material = SubResource( 5 )
 size = Vector3( 1, 1, 1 )
 
+[sub_resource type="BoxShape" id=7]
+
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
 
@@ -65,6 +69,14 @@ environment = SubResource( 3 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, -7, 17.378, 34.889 )
+projection = 1
+current = true
+size = 10.0
+far = 500.0
+script = ExtResource( 9 )
+
+[node name="CameraDown" type="Camera" parent="."]
+transform = Transform( 0.707107, -0.353553, 0.612373, -7.57103e-08, -0.866025, -0.5, 0.707107, 0.353553, -0.612372, 33, -17.378, -7.111 )
 projection = 1
 size = 10.0
 far = 500.0
@@ -677,5 +689,15 @@ shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
 transform = Transform( 0.707107, 0.407737, -0.645174, 0, 0.998749, 0.526782, 0.707107, -0.407737, 0.645174, 13, 1, 11 )
+
+[node name="KinematicBody" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 10 )
+script = ExtResource( 11 )
+
+[node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
+shape = SubResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="KinematicBody"]
+mesh = ExtResource( 10 )
 
 [connection signal="player_action" from="Player" to="swapper" method="_on_Player_player_action"]

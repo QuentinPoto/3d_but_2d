@@ -4,6 +4,7 @@
 sky_top_color = Color( 1, 1, 1, 1 )
 
 [resource]
+background_mode = 2
 background_sky = SubResource( 1 )
 glow_bloom = 0.09
 glow_blend_mode = 0

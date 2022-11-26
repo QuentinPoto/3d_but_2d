@@ -1,6 +1,6 @@
 extends Node
 
-const swapping_speed: int = 30
+const swapping_speed: int = 60
 var is_swapping: bool = false
 var swapping_p: float = 0 # pourcentage de ou on en est dans le swapping #TODO rename
 

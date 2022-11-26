@@ -7,7 +7,9 @@ func _ready():
 	modulate.a = 1
 	opacity = 1
 
+
 func _input(event):
+	"""
 	if event.is_action_pressed("ui_up"):
 		translation.x += 1
 	elif event.is_action_pressed("ui_down"):
@@ -16,12 +18,27 @@ func _input(event):
 		translation.z -= 1
 	elif event.is_action_pressed("ui_right"):
 		translation.z += 1
-	elif event.is_action_pressed("on_action"):
+	"""
+	if event.is_action_pressed("on_action"):
 		emit_signal("player_action", translation)
 
 
+var speed_v: float = 5
+var speed_h: float = speed_v * 0.5 # racine 3 sur 3
 
-
+func _process(delta):
+	if Input.is_action_pressed("ui_up"):
+		translation.x += speed_v * delta
+		translation.z -= speed_v * delta
+	if Input.is_action_pressed("ui_down"):
+		translation.x -= speed_v * delta
+		translation.z += speed_v * delta
+	if Input.is_action_pressed("ui_left"):
+		translation.x -= speed_h * delta
+		translation.z -= speed_h * delta
+	if Input.is_action_pressed("ui_right"):
+		translation.x += speed_h * delta
+		translation.z += speed_h * delta
 
 var player_swapped: bool
 
@@ -34,6 +51,7 @@ func swap_player(random: bool):
 	rotation_degrees.x = -(rotation_degrees.x)
 	rotation_degrees.z = 0 if rotation_degrees.z == 180 else 180
 	player_swapped = !player_swapped
+
 
 const swap_begin: int = 45
 const swap_end: int = 55

@@ -31,8 +31,9 @@ func init(_pos: Vector3, _tex: int):
 	self.pos = _pos
 	self.tex = _tex
 	_set_tex()
-	
-const BLOCK_SIZE = 1.005
+
+"""
+const BLOCK_SIZE = 1.009
 func _physics_process(_delta):
 	if SwapLogic.is_swapping and SwapLogic.swapping_p < 50:
 		scale /= BLOCK_SIZE
@@ -40,4 +41,4 @@ func _physics_process(_delta):
 		scale *= BLOCK_SIZE
 	else:
 		scale = Vector3(1, 1, 1)
-		
+"""
