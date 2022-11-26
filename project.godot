@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://map_blocks/Cube.gd"
 }, {
-"base": "Sprite3D",
+"base": "Spatial",
 "class": "Player",
 "language": "GDScript",
 "path": "res://player/player.gd"
@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="3d_but_2d"
-run/main_scene="res://scene/Main.tscn"
+run/main_scene="res://scene/level1.tscn"
 
 [autoload]
 

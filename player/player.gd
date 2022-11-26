@@ -1,11 +1,12 @@
-extends Sprite3D
+extends Spatial
 class_name Player
 
 signal player_action
 
+"""
 func _ready():
-	modulate.a = 1
 	opacity = 1
+"""
 
 
 func _input(event):
@@ -22,24 +23,36 @@ func _input(event):
 	if event.is_action_pressed("on_action"):
 		emit_signal("player_action", translation)
 
-
-var speed_v: float = 5
-var speed_h: float = speed_v * 0.5 # racine 3 sur 3
+var speed_v: float = 3
+var speed_h: float = speed_v * 1 # racine 3 sur 3
 
 func _process(delta):
-	if Input.is_action_pressed("ui_up"):
-		translation.x += speed_v * delta
-		translation.z -= speed_v * delta
-	if Input.is_action_pressed("ui_down"):
-		translation.x -= speed_v * delta
-		translation.z += speed_v * delta
-	if Input.is_action_pressed("ui_left"):
-		translation.x -= speed_h * delta
-		translation.z -= speed_h * delta
-	if Input.is_action_pressed("ui_right"):
-		translation.x += speed_h * delta
-		translation.z += speed_h * delta
-
+	if not SwapLogic.is_player_down:
+		if Input.is_action_pressed("ui_up"):
+			translation.x += speed_v * delta
+			translation.z -= speed_v * delta
+		if Input.is_action_pressed("ui_down"):
+			translation.x -= speed_v * delta
+			translation.z += speed_v * delta
+		if Input.is_action_pressed("ui_left"):
+			translation.x -= speed_h * delta
+			translation.z -= speed_h * delta
+		if Input.is_action_pressed("ui_right"):
+			translation.x += speed_h * delta
+			translation.z += speed_h * delta
+	else:
+		if Input.is_action_pressed("ui_up"):
+			translation.x -= speed_v * delta
+			translation.z += speed_v * delta
+		if Input.is_action_pressed("ui_down"):
+			translation.x += speed_v * delta
+			translation.z -= speed_v * delta
+		if Input.is_action_pressed("ui_left"):
+			translation.x -= speed_h * delta
+			translation.z -= speed_h * delta
+		if Input.is_action_pressed("ui_right"):
+			translation.x += speed_h * delta
+			translation.z += speed_h * delta
 var player_swapped: bool
 
 func swap_player(random: bool):
@@ -47,11 +60,12 @@ func swap_player(random: bool):
 	# Avec le modulo 10, la condition va etre vrai un fois sur x
 	if random and Engine.get_frames_drawn() % 10 == 0:
 		return
-	translation.y = -(translation.y)
-	rotation_degrees.x = -(rotation_degrees.x)
+	#translation.y = -(translation.y)
+	var block_size = 2
+	translation.y = translation.y + block_size if SwapLogic.is_player_down else translation.y - block_size
 	rotation_degrees.z = 0 if rotation_degrees.z == 180 else 180
 	player_swapped = !player_swapped
-
+	SwapLogic.is_player_down = !SwapLogic.is_player_down
 
 const swap_begin: int = 45
 const swap_end: int = 55

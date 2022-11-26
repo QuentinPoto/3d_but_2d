@@ -23,10 +23,7 @@ func swapper_calcul():
 	x_rot_start = rotation_degrees.x
 	z_rot_start = rotation_degrees.z
 
-
-#func _ready():
-	#follow_this = ge
-
+"""
 func _physics_process(_delta):
 	if SwapLogic.is_swapping:
 		if not calculed:
@@ -44,3 +41,4 @@ func _physics_process(_delta):
 		calculed = false
 
 	pass
+"""

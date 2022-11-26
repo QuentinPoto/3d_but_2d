@@ -9,7 +9,6 @@ var cubes_object = []
 
 var cam_swapped = false
 
-"""
 
 func _process(delta):
 	pass
@@ -19,6 +18,7 @@ func _process(delta):
 	if not SwapLogic.is_swapping:
 		cam_swapped = false
 
+"""
 
 # tableau par etage [y][x][z] (swap x et z ?)
 const level = [

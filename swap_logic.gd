@@ -28,4 +28,5 @@ static func speed_ratio(a: float, b: float, speed: float) -> float:
 		return (b / a) * speed
 
 
-# TODO aileurs ? -> var is_player_down: bool # if the player is in the upside down (not for animation !!!! -> is changed to the begining of the animation)
+# TODO aileurs ? -> 
+var is_player_down: bool = false # if the player is in the upside down (not for animation !!!! -> is changed to the begining of the animation)

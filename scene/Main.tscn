@@ -56,11 +56,10 @@ shadow_bias = 2.0
 omni_range = 4096.0
 
 [node name="Sun" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 10, 17 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9743, 80.1756, 12.4142 )
 light_color = Color( 0.960784, 0.666667, 0.666667, 1 )
 light_energy = 2.53
 light_bake_mode = 0
-shadow_enabled = true
 shadow_bias = 2.0
 omni_range = 4096.0
 
