@@ -3,17 +3,23 @@
 [ext_resource path="res://player/player.png" type="Texture" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
 
-[sub_resource type="CapsuleShape" id=1]
-radius = 0.457186
-height = 0.0136785
+[sub_resource type="CylinderShape" id=1]
+height = 0.737566
+radius = 0.332675
 
 [node name="KinematicBody" type="KinematicBody"]
 script = ExtResource( 2 )
 
-[node name="Player" type="Sprite3D" parent="."]
+[node name="Sprite" type="Sprite3D" parent="."]
 transform = Transform( 0.707107, 0.353553, -0.612371, 0, 0.866024, 0.499999, 0.707107, -0.353553, 0.612371, 0, 0, 0 )
+offset = Vector2( 0.441, 9.512 )
+alpha_cut = 2
 texture = ExtResource( 1 )
+region_rect = Rect2( 77, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.0562394, 0, 0.0352195 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0452315, 0.0746994, -0.00370282 )
 shape = SubResource( 1 )
+
+[node name="RayCast" type="RayCast" parent="."]
+enabled = true
