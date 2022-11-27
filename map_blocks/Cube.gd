@@ -4,7 +4,7 @@ extends MeshInstance
 enum {
 	NONE
 	FLOOR
-	WALL
+	WALL 
 	EARTH
 	STONE
 	SEA

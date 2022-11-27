@@ -1,61 +1,62 @@
-extends Spatial
+extends KinematicBody
 class_name Player
 
 signal player_action
 
-"""
-func _ready():
-	opacity = 1
-"""
+export var speed: float = 3
 
+var player_swapped: bool # Make private ??
+var _velocity: Vector3
 
 func _input(event):
-	"""
-	if event.is_action_pressed("ui_up"):
-		translation.x += 1
-	elif event.is_action_pressed("ui_down"):
-		translation.x -= 1
-	elif event.is_action_pressed("ui_left"):
-		translation.z -= 1
-	elif event.is_action_pressed("ui_right"):
-		translation.z += 1
-	"""
 	if event.is_action_pressed("on_action"):
 		emit_signal("player_action", translation)
 
-var speed_v: float = 3
-var speed_h: float = speed_v * 1 # racine 3 sur 3
-
-func _process(delta):
-	if not SwapLogic.is_player_down:
-		if Input.is_action_pressed("ui_up"):
-			translation.x += speed_v * delta
-			translation.z -= speed_v * delta
-		if Input.is_action_pressed("ui_down"):
-			translation.x -= speed_v * delta
-			translation.z += speed_v * delta
-		if Input.is_action_pressed("ui_left"):
-			translation.x -= speed_h * delta
-			translation.z -= speed_h * delta
-		if Input.is_action_pressed("ui_right"):
-			translation.x += speed_h * delta
-			translation.z += speed_h * delta
+func _physics_process(delta):
+	if not SwapLogic.is_swapping:
+		_player_movement(delta)
+		player_swapped = false
 	else:
-		if Input.is_action_pressed("ui_up"):
-			translation.x -= speed_v * delta
-			translation.z += speed_v * delta
-		if Input.is_action_pressed("ui_down"):
-			translation.x += speed_v * delta
-			translation.z -= speed_v * delta
-		if Input.is_action_pressed("ui_left"):
-			translation.x -= speed_h * delta
-			translation.z -= speed_h * delta
-		if Input.is_action_pressed("ui_right"):
-			translation.x += speed_h * delta
-			translation.z += speed_h * delta
-var player_swapped: bool
+		_player_swapper()
 
-func swap_player(random: bool):
+############ PLAYER MOVEMENT #############
+func _player_movement(delta):
+	var direction = Vector3.ZERO
+	if Input.is_action_pressed("ui_down"):
+		direction.x -= 1
+		direction.z += 1
+	if Input.is_action_pressed("ui_up"):
+		direction.x += 1
+		direction.z -= 1
+	if not SwapLogic.is_player_down:
+		if Input.is_action_pressed("ui_right"):
+			direction += Vector3(1, 0, 1)
+		if Input.is_action_pressed("ui_left"):
+			direction -= Vector3(1, 0, 1)
+	else:
+		if Input.is_action_pressed("ui_right"):
+			direction -= Vector3(1, 0, 1)
+		if Input.is_action_pressed("ui_left"):
+			direction += Vector3(1, 0, 1)
+		pass
+	direction = direction.normalized() # permet d'eviter que ca aie 2x plus vite en diagonale
+	_velocity.x = direction.x * speed
+	_velocity.z = direction.z * speed
+	_velocity.y = 0 # TODO a enlever en cas d'echelle
+	_velocity = move_and_slide(_velocity, Vector3.UP)
+
+
+##########	PLAYER SWAPPER	##########
+const swap_begin: int = 45
+const swap_end: int = 55
+
+func _player_swapper():
+	if swap_begin < SwapLogic.swapping_p and SwapLogic.swapping_p < swap_end:# and not player_swapped:
+		_swap_player(true)
+	if SwapLogic.swapping_p > swap_end and not player_swapped:
+		_swap_player(false)
+
+func _swap_player(random: bool):
 	# Engine.get_frames_drawn -> nombre de frame jusqua la (augmente infiniment)
 	# Avec le modulo 10, la condition va etre vrai un fois sur x
 	if random and Engine.get_frames_drawn() % 10 == 0:
@@ -67,16 +68,9 @@ func swap_player(random: bool):
 	player_swapped = !player_swapped
 	SwapLogic.is_player_down = !SwapLogic.is_player_down
 
-const swap_begin: int = 45
-const swap_end: int = 55
-func _physics_process(_delta):
-	if not SwapLogic.is_swapping:
-		player_swapped = false
-		return
-	if swap_begin < SwapLogic.swapping_p and SwapLogic.swapping_p < swap_end:# and not player_swapped:
-		swap_player(true)
-	if SwapLogic.swapping_p > swap_end and not player_swapped:
-		swap_player(false)
+
+
+
 
 
 """
