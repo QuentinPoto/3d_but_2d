@@ -40,6 +40,14 @@ run/main_scene="res://scene/level1.tscn"
 Global="*res://global.gd"
 SwapLogic="*res://swap_logic.gd"
 
+[display]
+
+window/size/test_width=1024
+window/size/test_height=600
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+window/stretch/shrink=2.0
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
