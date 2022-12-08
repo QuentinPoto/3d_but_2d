@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
-[ext_resource path="res://map_blocks/Cube.tscn" type="PackedScene" id=2]
 [ext_resource path="res://map_blocks/ladder.tscn" type="PackedScene" id=4]
-[ext_resource path="res://new_meshlibrary.tres" type="MeshLibrary" id=6]
+[ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=6]
 [ext_resource path="res://map_blocks/swapper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scene/Camera.gd" type="Script" id=9]
@@ -13,9 +12,6 @@
 [sub_resource type="Environment" id=8]
 background_mode = 2
 background_sky = SubResource( 7 )
-
-[sub_resource type="BoxShape" id=9]
-extents = Vector3( 0.115084, 2.0128, 5.71267 )
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
@@ -65,16 +61,23 @@ size = 10.0
 far = 500.0
 script = ExtResource( 9 )
 
-[node name="goal" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.03499, 3, 2 )
-
-[node name="OmniLight" type="OmniLight" parent="goal"]
-light_color = Color( 0.968627, 1, 0, 1 )
-light_energy = 4.0
-shadow_enabled = true
-shadow_contact = 0.131
+[node name="GridMap" type="GridMap" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1 )
+mesh_library = ExtResource( 6 )
+cell_size = Vector3( 1, 1, 1 )
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PoolIntArray( 0, 0, 1, 3, 0, 1, 7, 0, 1, 65535, 0, 1, 65537, 0, 4, 65540, 0, 4, 65541, 0, 4, 65542, 0, 4, 65544, 0, 4, 65545, 0, 4, 3, 1, 1, 65535, 1, 1, 65536, 1, 4, 65537, 1, 4, 65538, 1, 4, 65540, 1, 4, 65541, 1, 4, 65542, 1, 4, 65544, 1, 4, 65545, 1, 4, 3, 2, 1, 5, 2, 1, 6, 2, 1, 7, 2, 1, 65535, 2, 1, 65537, 2, 4, 65538, 2, 4, 65540, 2, 4, 65544, 2, 4, 65545, 2, 4, 1, 3, 1, 2, 3, 1, 3, 3, 1, 5, 3, 1, 6, 3, 1, 7, 3, 1, 65535, 3, 1, 65536, 3, 4, 65544, 3, 4, 65545, 3, 4, 0, 65535, 1, 3, 65535, 1, 4, 65535, 1, 5, 65535, 1, 7, 65535, 1, 65535, 65535, 1, 65537, 65535, 4, 65538, 65535, 4, 65542, 65535, 4, 65544, 65535, 4, 65545, 65535, 4 )
+}
+__meta__ = {
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, 0, 0 )
+}
 
 [node name="Ladders" type="Spatial" parent="."]
+visible = false
 
 [node name="Sprite3D" parent="Ladders" instance=ExtResource( 4 )]
 transform = Transform( -2.18557e-07, 0, 1, 0, 5, 0, -5, 0, -4.37114e-08, 1.45, 1, 0 )
@@ -100,55 +103,106 @@ transform = Transform( -2.18557e-07, 0, 1, 0, 5, 0, -5, 0, -4.37114e-08, 6.45, 1
 [node name="Sprite3D4" parent="Ladders" instance=ExtResource( 4 )]
 transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 1, 3, 1, 3.55 )
 
-[node name="GridMap" type="GridMap" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1 )
-mesh_library = ExtResource( 6 )
-cell_size = Vector3( 1, 1, 1 )
-cell_center_x = false
-cell_center_y = false
-cell_center_z = false
-data = {
-"cells": PoolIntArray( 0, 0, 1, 3, 0, 1, 7, 0, 1, 65535, 0, 1, 65537, 0, 4, 65540, 0, 4, 65541, 0, 4, 65542, 0, 4, 65544, 0, 4, 65545, 0, 4, 3, 1, 1, 5, 1, 1, 7, 1, 1, 65535, 1, 1, 65536, 1, 4, 65537, 1, 4, 65538, 1, 4, 65540, 1, 4, 65542, 1, 4, 65544, 1, 4, 65545, 1, 4, 3, 2, 1, 5, 2, 1, 7, 2, 1, 65535, 2, 1, 65537, 2, 4, 65538, 2, 4, 65540, 2, 4, 65542, 2, 4, 65544, 2, 4, 65545, 2, 4, 1, 3, 1, 2, 3, 1, 3, 3, 1, 5, 3, 1, 6, 3, 1, 7, 3, 1, 65535, 3, 1, 65536, 3, 4, 65544, 3, 4, 65545, 3, 4, 0, 65535, 1, 3, 65535, 1, 4, 65535, 1, 5, 65535, 1, 7, 65535, 1, 65535, 65535, 1, 65537, 65535, 4, 65538, 65535, 4, 65542, 65535, 4, 65544, 65535, 4, 65545, 65535, 4 )
-}
-__meta__ = {
-"_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, 1, 0 )
-}
+[node name="Slopes" type="Spatial" parent="."]
 
-[node name="Player" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.075, 1 )
-
-[node name="swapper-1" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 3 )
-
-[node name="Walls" type="StaticBody" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="Walls"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.844493, 0, 1.95599 )
-shape = SubResource( 9 )
-
-[node name="CollisionShape2" type="CollisionShape" parent="Walls"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8866, 0, 1.95599 )
-shape = SubResource( 9 )
-
-[node name="CollisionShape3" type="CollisionShape" parent="Walls"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.96421, 0, 4.93176 )
-shape = SubResource( 9 )
-
-[node name="CollisionShape4" type="CollisionShape" parent="Walls"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.96421, 0, -0.902059 )
-shape = SubResource( 9 )
-
-[node name="slope" type="StaticBody" parent="."]
+[node name="slope" type="StaticBody" parent="Slopes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5 )
 
-[node name="CSGPolygon" type="CSGPolygon" parent="slope"]
+[node name="CSGPolygon" type="CSGPolygon" parent="Slopes/slope"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
 polygon = PoolVector2Array( 0, 1, 0, 1, 1, 2, 1, 1 )
 
-[node name="CollisionPolygon" type="CollisionPolygon" parent="slope"]
+[node name="CollisionPolygon" type="CollisionPolygon" parent="Slopes/slope"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044, 0.083, -0.508 )
 depth = 1.057
 polygon = PoolVector2Array( 0.967322, 0.925388, 0.967147, -0.194491, -0.180578, -0.218402 )
 
-[connection signal="player_action" from="Player" to="swapper-1" method="_on_Player_player_action"]
+[node name="slope3" type="StaticBody" parent="Slopes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.5, 0.5 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="Slopes/slope3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+polygon = PoolVector2Array( 0, 1, 0, 1, 1, 2, 1, 1 )
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="Slopes/slope3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044, 0.083, -0.508 )
+depth = 1.057
+polygon = PoolVector2Array( 0.967322, 0.925388, 0.967147, -0.194491, -0.180578, -0.218402 )
+
+[node name="slope4" type="StaticBody" parent="Slopes"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.5, 0.5, 3.5 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="Slopes/slope4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+polygon = PoolVector2Array( 0, 1, 0, 1, 1, 2, 1, 1 )
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="Slopes/slope4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044, 0.083, -0.508 )
+depth = 1.057
+polygon = PoolVector2Array( 0.967322, 0.925388, 0.967147, -0.194491, -0.180578, -0.218402 )
+
+[node name="slope5" type="StaticBody" parent="Slopes"]
+transform = Transform( -4.37114e-08, 0, 1, -8.74228e-08, -1, -3.82137e-15, 1, -8.74228e-08, 4.37114e-08, 3.5, 0.5, 2.5 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="Slopes/slope5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+polygon = PoolVector2Array( 0, 1, 0, 1, 1, 2, 1, 1 )
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="Slopes/slope5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044, 0.083, -0.508 )
+depth = 1.057
+polygon = PoolVector2Array( 0.967322, 0.925388, 0.967147, -0.194491, -0.180578, -0.218402 )
+
+[node name="slope6" type="StaticBody" parent="Slopes"]
+transform = Transform( -1, 8.74228e-08, -8.74228e-08, -8.74228e-08, -1, -3.82137e-15, -8.74228e-08, 3.82137e-15, 1, 1.5, 0.5, 2.5 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="Slopes/slope6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+polygon = PoolVector2Array( 0, 1, 0, 1, 1, 2, 1, 1 )
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="Slopes/slope6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044, 0.083, -0.508 )
+depth = 1.057
+polygon = PoolVector2Array( 0.967322, 0.925388, 0.967147, -0.194491, -0.180578, -0.218402 )
+
+[node name="slope7" type="StaticBody" parent="Slopes"]
+transform = Transform( -4.37114e-08, 0, 1, -8.74228e-08, -1, -3.82137e-15, 1, -8.74228e-08, 4.37114e-08, 6.5, 0.5, 1.5 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="Slopes/slope7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+polygon = PoolVector2Array( 0, 1, 0, 1, 1, 2, 1, 1 )
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="Slopes/slope7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0440001, 0.175968, -0.508 )
+depth = 1.057
+polygon = PoolVector2Array( 0.967322, 0.925388, 0.967147, -0.194491, -0.180578, -0.218402 )
+
+[node name="slope8" type="StaticBody" parent="Slopes"]
+transform = Transform( -1, 8.74228e-08, -8.74228e-08, -8.74228e-08, -1, -3.82137e-15, -8.74228e-08, 3.82137e-15, 1, 9.5, 0.5, 1.5 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="Slopes/slope8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+polygon = PoolVector2Array( 0, 1, 0, 1, 1, 2, 1, 1 )
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="Slopes/slope8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044, 0.083, -0.508 )
+depth = 1.057
+polygon = PoolVector2Array( 0.967322, 0.925388, 0.967147, -0.194491, -0.180578, -0.218402 )
+
+[node name="Swappers" type="Spatial" parent="."]
+
+[node name="swapper-1" parent="Swappers" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 3 )
+
+[node name="swapper-2" parent="Swappers" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1 )
+
+[node name="swapper-3" parent="Swappers" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 2 )
+
+[node name="Player" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1 )
+
+[connection signal="player_action" from="Player" to="Swappers/swapper-1" method="_on_Player_player_action"]
+[connection signal="player_action" from="Player" to="Swappers/swapper-2" method="_on_Player_player_action"]
+[connection signal="player_action" from="Player" to="Swappers/swapper-3" method="_on_Player_player_action"]

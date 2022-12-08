@@ -1,5 +1,13 @@
 extends Node
 
+# Script qui 
+# - peut etre appeler depuis n'importe ou
+# - contient des infos partagee
+# - variable qui peuvent changer depuis n'importe ou
+#
+# ---->	Concerne l'action de passer au monde souternai
+
+
 const swapping_speed: int = 60
 var is_swapping: bool = false
 var swapping_p: float = 0 # pourcentage de ou on en est dans le swapping #TODO rename

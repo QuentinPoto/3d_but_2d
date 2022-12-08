@@ -1,4 +1,11 @@
 extends Camera
+"""
+
+
+# Logique de swap de la cam (ancien)
+# Le swap actuel est dans Main.gd (le script de scene)
+
+
 
 # TODO trouver un moyen plus dynamique de faire ca
 var is_down: bool = true
@@ -23,7 +30,7 @@ func swapper_calcul():
 	x_rot_start = rotation_degrees.x
 	z_rot_start = rotation_degrees.z
 
-"""
+
 func _physics_process(_delta):
 	if SwapLogic.is_swapping:
 		if not calculed:
@@ -41,4 +48,24 @@ func _physics_process(_delta):
 		calculed = false
 
 	pass
+"""
+
+"""
+# Code pour faire rotation
+extends KinematicBody
+
+#############################
+var RotateSpeed = 2
+var Radius = 1
+var _centre
+var _angle = 0
+func _ready():
+	set_process(true)
+	_centre = Vector2(translation.x, translation.z)
+func _process(delta): 
+	_angle += RotateSpeed * delta;
+	var offset = Vector2(sin(_angle), cos(_angle)) * Radius;
+	var pos: Vector2 = _centre + offset
+	translation = Vector3(pos.x, 1, pos.y)
+############################
 """

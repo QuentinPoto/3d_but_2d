@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "MeshInstance",
-"class": "Cube",
-"language": "GDScript",
-"path": "res://map_blocks/Cube.gd"
-}, {
 "base": "KinematicBody",
 "class": "Player",
 "language": "GDScript",
@@ -25,19 +20,17 @@ _global_script_classes=[ {
 "path": "res://map_blocks/swapper.gd"
 } ]
 _global_script_class_icons={
-"Cube": "",
 "Player": "",
 "Swapper": ""
 }
 
 [application]
 
-config/name="3d_but_2d"
+config/name="StationLayton"
 run/main_scene="res://scene/level1.tscn"
 
 [autoload]
 
-Global="*res://global.gd"
 SwapLogic="*res://swap_logic.gd"
 
 [display]
@@ -46,7 +39,7 @@ window/size/test_width=1024
 window/size/test_height=600
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
-window/stretch/shrink=2.0
+window/stretch/shrink=1.5
 
 [gui]
 

@@ -17,9 +17,34 @@ alpha_cut = 2
 texture = ExtResource( 1 )
 region_rect = Rect2( 77, 0, 0, 0 )
 
+[node name="CSGCylinder" type="CSGCylinder" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.247514, 0 )
+radius = 0.278
+height = 0.085
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0452315, 0.0746994, -0.00370282 )
 shape = SubResource( 1 )
 
-[node name="RayCast" type="RayCast" parent="."]
+[node name="RayCasts" type="Spatial" parent="."]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0.041, 0 )
+
+[node name="Down" type="RayCast" parent="RayCasts"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.297273, -0.319747, 0 )
 enabled = true
+cast_to = Vector3( 0, -0.9, 0 )
+
+[node name="Left" type="RayCast" parent="RayCasts"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00148058, -0.319747, -0.302828 )
+enabled = true
+cast_to = Vector3( 0, -0.9, 0 )
+
+[node name="Right" type="RayCast" parent="RayCasts"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0150404, -0.319747, 0.25587 )
+enabled = true
+cast_to = Vector3( 0, -0.9, 0 )
+
+[node name="Up" type="RayCast" parent="RayCasts"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.280175, -0.319747, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.9, 0 )
