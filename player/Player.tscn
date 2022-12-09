@@ -29,22 +29,27 @@ shape = SubResource( 1 )
 [node name="RayCasts" type="Spatial" parent="."]
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0.041, 0 )
 
-[node name="Down" type="RayCast" parent="RayCasts"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.297273, -0.319747, 0 )
+[node name="DownLeft" type="RayCast" parent="RayCasts"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, -0.2 )
 enabled = true
-cast_to = Vector3( 0, -0.9, 0 )
+cast_to = Vector3( 0, -1.2, 0 )
 
-[node name="Left" type="RayCast" parent="RayCasts"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00148058, -0.319747, -0.302828 )
+[node name="UpLeft" type="RayCast" parent="RayCasts"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, -0.2 )
 enabled = true
-cast_to = Vector3( 0, -0.9, 0 )
+cast_to = Vector3( 0, -1.2, 0 )
 
-[node name="Right" type="RayCast" parent="RayCasts"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0150404, -0.319747, 0.25587 )
+[node name="DownRight" type="RayCast" parent="RayCasts"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0.2 )
 enabled = true
-cast_to = Vector3( 0, -0.9, 0 )
+cast_to = Vector3( 0, -1.2, 0 )
 
-[node name="Up" type="RayCast" parent="RayCasts"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.280175, -0.319747, 0 )
+[node name="UpRight" type="RayCast" parent="RayCasts"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, 0.2 )
 enabled = true
-cast_to = Vector3( 0, -0.9, 0 )
+cast_to = Vector3( 0, -1.2, 0 )
+
+[node name="Middle" type="RayCast" parent="RayCasts"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32, 0 )
+enabled = true
+cast_to = Vector3( 0, -2, 0 )

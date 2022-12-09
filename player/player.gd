@@ -3,9 +3,8 @@ class_name Player
 
 signal player_action
 
-export var speed: float = 5
+export var speed: float = 2
 var _is_player_down: bool
-var _velocity: Vector3
 
 func _input(event):
 	if event.is_action_pressed("on_action"):
@@ -25,39 +24,55 @@ func _player_movement():
 	if Input.is_action_pressed("ui_right"):
 		direction += Vector3(1, 0, 1)
 	if Input.is_action_pressed("ui_left"):
-		direction -= Vector3(1, 0, 1)
-	if Input.is_action_pressed("ui_down"):
-		direction += Vector3(-1, 0, 1) if not SwapLogic.is_player_down else Vector3(1, 0, -1)
+		direction += Vector3(-1, 0, -1)
 	if Input.is_action_pressed("ui_up"):
-		direction += Vector3(1, 0, -1) if not SwapLogic.is_player_down else Vector3(-1, 0, 1)
-
-	if not $RayCasts/Right.is_colliding():
-		direction -= Vector3(1, 0, 1)
-	if not $RayCasts/Left.is_colliding():
-		direction += Vector3(1, 0, 1)
-	if not $RayCasts/Down.is_colliding():
-		direction -= Vector3(-1, 0, 1) if not SwapLogic.is_player_down else Vector3(1, 0, -1)
-	if not $RayCasts/Up.is_colliding():
-		direction -= Vector3(1, 0, -1) if not SwapLogic.is_player_down else Vector3(-1, 0, 1)
-
-	direction = direction.normalized() # permet d'eviter que ca aie 2x plus vite en diagonale
-
-	## TODO ameliorer ca : 
-	## Il prend la distance entre le raycast de gauche et le point de collision de 
-	## ce dernier et descend en y en fonction de cette distance
-	## ca marche en descante mais pas ouf en montee...
-	direction.y = 0
-	var distance_from_floor = 0
-	if $RayCasts/Left.is_colliding():
-		var origin = $RayCasts/Left.global_transform.origin
-		var collision_point = $RayCasts/Left.get_collision_point()
-		distance_from_floor = origin.distance_to(collision_point)
-		if (distance_from_floor > 0.15):
-			direction.y = -distance_from_floor if not SwapLogic.is_player_down else distance_from_floor
-	_velocity = direction * speed
+		direction += Vector3(1, 0, -1)
+	if Input.is_action_pressed("ui_down"):
+		direction += Vector3(-1, 0, 1)
+	
+	if SwapLogic.is_player_down:
+		var _temp = direction.x
+		direction.x = direction.z
+		direction.z = _temp
+	
+	direction = direction.normalized()
+	move_and_slide(direction * speed)
+	
+	if SwapLogic.is_player_down:
+		var _temp = direction.x
+		direction.x = direction.z
+		direction.z = _temp
+	
+	if not $RayCasts/DownRight.is_colliding():
+		if not direction.z: direction.z = 1
+		direction.z = -direction.z
+	if not $RayCasts/DownLeft.is_colliding():
+		if not direction.x: direction.x = -1
+		direction.x = -direction.x
+	if not $RayCasts/UpRight.is_colliding():
+		if not direction.x: direction.x = 1
+		direction.x = -direction.x
+	if not $RayCasts/UpLeft.is_colliding():
+		if not direction.z: direction.z = -1
+		direction.z = -direction.z
+	
+	if SwapLogic.is_player_down:
+		var _temp = direction.x
+		direction.x = direction.z
+		direction.z = _temp
+	"""
+	## TODO ameliorer ca :
+	if $RayCasts/Middle.is_colliding():
+		var origin = $RayCasts/Middle.global_transform.origin
+		var collision = $RayCasts/Middle.get_collision_point()
+		direction.y = (collision - origin).y
+	"""
+	direction.y = 1 if SwapLogic.is_player_down else -1
+	
+	print(direction)
 	# La fonction move_and_slide agit directement sur le KinematicBody (method de cette class)
 	# Ce qui explique qu'on ne lui donne pas la translation du player en parametre
-	_velocity = move_and_slide(_velocity, Vector3.UP)
+	move_and_slide(direction * speed)
 
 ##########	PLAYER SWAPPER	##########
 const swap_begin: int = 45
