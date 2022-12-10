@@ -69,7 +69,7 @@ func _player_movement():
 		direction.y = (collision - origin).y
 	"""
 	direction.y = 1 if SwapLogic.is_player_down else -1
-	
+
 	# La fonction move_and_slide agit directement sur le KinematicBody (method de cette class)
 	# Ce qui explique qu'on ne lui donne pas la translation du player en parametre
 	move_and_slide(direction * speed)
