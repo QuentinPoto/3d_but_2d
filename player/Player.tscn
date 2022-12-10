@@ -12,6 +12,7 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite3D" parent="."]
 transform = Transform( 0.707107, 0.353553, -0.612371, 0, 0.866024, 0.499999, 0.707107, -0.353553, 0.612371, 0, 0, 0 )
+visible = false
 offset = Vector2( 0.441, 9.512 )
 alpha_cut = 2
 texture = ExtResource( 1 )

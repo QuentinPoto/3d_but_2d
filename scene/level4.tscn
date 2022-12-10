@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
 [ext_resource path="res://scene/Rotationnal.gd" type="Script" id=2]
+[ext_resource path="res://interactibles/lever.tscn" type="PackedScene" id=3]
 [ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=6]
 [ext_resource path="res://map_blocks/swapper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=8]
@@ -90,9 +91,9 @@ data = {
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, 0, 0 )
+"_editor_floor_": Vector3( 0, -4, 0 )
 }
-rotation_speed = 15
+rotation_speed = 60
 
 [node name="Swappers" type="Spatial" parent="."]
 
@@ -102,4 +103,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 0 )
 [node name="Player" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
+[node name="Lever" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 2 )
+
 [connection signal="player_action" from="Player" to="Swappers/swapper-1" method="_on_Player_player_action"]
+[connection signal="player_action" from="Player" to="Lever" method="_on_Player_player_action"]
+[connection signal="lever_signal" from="Lever" to="Rotationnal" method="_on_Lever_lever_signal"]

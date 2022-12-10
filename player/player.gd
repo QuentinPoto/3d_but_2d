@@ -8,7 +8,7 @@ var _is_player_down: bool
 
 func _input(event):
 	if event.is_action_pressed("on_action"):
-		print("action ", translation)
+		#print("action ", translation)
 		emit_signal("player_action", translation)
 
 func _physics_process(delta):

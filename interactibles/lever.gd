@@ -1,6 +1,7 @@
 class_name Lever
 extends Spatial
 export var lever_number: int
+signal lever_signal
 
 # Lever : un interactible booléen
 func _on_Player_player_action(player_pos: Vector3):
@@ -10,5 +11,5 @@ func _on_Player_player_action(player_pos: Vector3):
 	# compare les autres coordonees
 	if translation.round() == player_pos.round():
 		$Sprite3D.flip_h = not $Sprite3D.flip_h
-		print($Sprite3D.flip_h)
+		print("emiting")
 		emit_signal("lever_signal", lever_number, $Sprite3D.flip_v)
