@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Spatial",
+"class": "Lever",
+"language": "GDScript",
+"path": "res://interactibles/lever.gd"
+}, {
 "base": "KinematicBody",
 "class": "Player",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://map_blocks/swapper.gd"
 } ]
 _global_script_class_icons={
+"Lever": "",
 "Player": "",
 "Swapper": ""
 }

@@ -99,7 +99,6 @@ extents = Vector3( 0.5, 0.5, 0.5 )
 
 [sub_resource type="StreamTexture" id=36]
 flags = 16
-load_path = "res://.import/player.png-e2a37d51be4979a9a7b41aa617b2ab83.stex"
 
 [sub_resource type="BoxShape" id=21]
 

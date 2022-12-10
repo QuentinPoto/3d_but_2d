@@ -8,6 +8,7 @@ var _is_player_down: bool
 
 func _input(event):
 	if event.is_action_pressed("on_action"):
+		print("action ", translation)
 		emit_signal("player_action", translation)
 
 func _physics_process(delta):
@@ -69,7 +70,6 @@ func _player_movement():
 	"""
 	direction.y = 1 if SwapLogic.is_player_down else -1
 	
-	print(direction)
 	# La fonction move_and_slide agit directement sur le KinematicBody (method de cette class)
 	# Ce qui explique qu'on ne lui donne pas la translation du player en parametre
 	move_and_slide(direction * speed)
