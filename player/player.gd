@@ -21,15 +21,24 @@ func _physics_process(delta):
 ############ PLAYER MOVEMENT #############
 func _player_movement():
 	var direction = Vector3.ZERO
+	var orientation = Vector2.ZERO
 
 	if Input.is_action_pressed("ui_right"):
 		direction += Vector3(1, 0, 1)
+		orientation += Vector2(1, 0)
 	if Input.is_action_pressed("ui_left"):
 		direction += Vector3(-1, 0, -1)
+		orientation += Vector2(-1, 0)
 	if Input.is_action_pressed("ui_up"):
 		direction += Vector3(1, 0, -1)
+		orientation += Vector2(0, 1)
 	if Input.is_action_pressed("ui_down"):
 		direction += Vector3(-1, 0, 1)
+		orientation += Vector2(0, -1)
+	
+	direction = direction.normalized()
+	
+	$AnimationTree.set("parameters/Movement/blend_position", orientation)
 	
 	if SwapLogic.is_player_down:
 		var _temp = direction.x
