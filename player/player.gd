@@ -15,6 +15,7 @@ func _physics_process(delta):
 		_player_swapper()
 
 ############ PLAYER MOVEMENT #############
+
 func _player_movement() -> void:
 	var direction
 	if _ladder_contact_front and _ladder_front_movement():
@@ -24,16 +25,25 @@ func _player_movement() -> void:
 		_border_check(direction)
 
 func _normal_movement() -> Vector3:
+	var orientation = Vector2.ZERO
 	var direction = Vector3.ZERO
 	
 	if Input.is_action_pressed("ui_right"):
 		direction += Vector3(1, 0, 1)
+		orientation += Vector2(1, 0)
 	if Input.is_action_pressed("ui_left"):
 		direction += Vector3(-1, 0, -1)
+		orientation += Vector2(-1, 0)
 	if Input.is_action_pressed("ui_up"):
 		direction += Vector3(1, 0, -1)
+		orientation += Vector2(0, 1)
 	if Input.is_action_pressed("ui_down"):
 		direction += Vector3(-1, 0, 1)
+		orientation += Vector2(0, -1)
+	
+	direction = direction.normalized()
+	
+	$AnimationTree.set("parameters/Movement/blend_position", orientation)
 	
 	if SwapLogic.is_player_down:
 		var _temp = direction.x
