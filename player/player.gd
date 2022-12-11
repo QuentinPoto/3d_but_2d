@@ -1,15 +1,11 @@
 extends KinematicBody
-class_name Player
-
-signal player_action
 
 export var speed: float = 2
-var _is_player_down: bool
 
-func _input(event):
-	if event.is_action_pressed("on_action"):
-		#print("action ", translation)
-		emit_signal("player_action", translation)
+var _is_player_down: bool = false
+var _ladder_contact_front: bool = false
+var _ladder_contact_top: bool = false
+var _ladder_direction
 
 func _physics_process(delta):
 	if not SwapLogic.is_swapping:
@@ -19,9 +15,17 @@ func _physics_process(delta):
 		_player_swapper()
 
 ############ PLAYER MOVEMENT #############
-func _player_movement():
-	var direction = Vector3.ZERO
+func _player_movement() -> void:
+	var direction
+	if _ladder_contact_front and _ladder_front_movement():
+		return
+	direction = _normal_movement()
+	if not _ladder_contact_top:
+		_border_check(direction)
 
+func _normal_movement() -> Vector3:
+	var direction = Vector3.ZERO
+	
 	if Input.is_action_pressed("ui_right"):
 		direction += Vector3(1, 0, 1)
 	if Input.is_action_pressed("ui_left"):
@@ -37,13 +41,17 @@ func _player_movement():
 		direction.z = _temp
 	
 	direction = direction.normalized()
+	direction.y = 1 if SwapLogic.is_player_down else -1 # gravity TODO ameliorer
 	move_and_slide(direction * speed)
-	
+	return direction
+
+func _border_check(direction: Vector3) -> void: # TODO : il double la vitesse !!!
+	# swap la direction pour annuler le movement si on est au bord
 	if SwapLogic.is_player_down:
 		var _temp = direction.x
 		direction.x = direction.z
 		direction.z = _temp
-	
+
 	if not $RayCasts/DownRight.is_colliding():
 		if not direction.z: direction.z = 1
 		direction.z = -direction.z
@@ -61,18 +69,55 @@ func _player_movement():
 		var _temp = direction.x
 		direction.x = direction.z
 		direction.z = _temp
-	"""
-	## TODO ameliorer ca :
-	if $RayCasts/Middle.is_colliding():
-		var origin = $RayCasts/Middle.global_transform.origin
-		var collision = $RayCasts/Middle.get_collision_point()
-		direction.y = (collision - origin).y
-	"""
-	direction.y = 1 if SwapLogic.is_player_down else -1
 
 	# La fonction move_and_slide agit directement sur le KinematicBody (method de cette class)
 	# Ce qui explique qu'on ne lui donne pas la translation du player en parametre
 	move_and_slide(direction * speed)
+
+func _ladder_front_movement() -> bool: # return true s'il a bouge, false si le normal_movement doit etre appele
+	if _ladder_contact_top:
+		return false
+
+	# set la direction voulue (input)
+	var rl_direction: int = -1
+	if Input.is_action_pressed("ui_left"):
+		rl_direction = Global.LEFT
+	elif Input.is_action_pressed("ui_right"):
+		rl_direction = Global.RIGHT
+
+	# Si on touche le sol
+	# et qu'on veut aller vers le bas
+	# ou qu'on veut aller a l'opposer de l'echelle
+	# 	-> on demande un _normal_movement
+	if _is_on_floor_step() \
+	and (Input.is_action_pressed("ui_down") \
+	or (rl_direction != -1 and rl_direction != _ladder_direction)):
+		return false
+
+	# set la direction
+	var direction = Vector3.ZERO
+	if Input.is_action_pressed("ui_up"):
+		direction.y = 1
+	elif Input.is_action_pressed("ui_down"):
+		direction.y = -1
+	if rl_direction != -1:
+		direction.y = 1 if rl_direction == _ladder_direction else -1
+
+	# TODO 
+	if SwapLogic.is_player_down:
+		direction.y = -direction.y
+
+
+	move_and_slide(direction * speed)
+	return true
+
+func _is_on_floor_step() -> bool: # renvoie true si le joueur est a la hauteur y de toucher le sol 
+	var tresh_hold: float = 0.25 # CONST
+	var distance_from_floor: float = Global.raycast_collision_distance($RayCasts/Middle)
+	return tresh_hold >= distance_from_floor or distance_from_floor <= -tresh_hold
+
+
+
 
 ##########	PLAYER SWAPPER	##########
 const swap_begin: int = 45
@@ -110,7 +155,7 @@ func _swap_player(random: bool):
 ########### PLAYER FX (BLINKING)
 """
  -> effet de clignotement. Vu que le swap player creer le meme effet, pas besoin de mettre les deux...
-func blincking():
+	func blincking():
 	var blincking_speed: int = round(2 * abs(SwapLogic.swapping_progress - 50) / 10)
 	if blincking_speed == 0:
 		return
@@ -122,4 +167,8 @@ func blincking():
 		self.modulate.a = 1.0
 """
 
-func _on_Player_player_action(_v): pass # used to silent a warning
+func _on_ladder1_ladder_contact_change(is_contact_front, is_contact_top, ladder_direction):
+	_ladder_contact_front = is_contact_front
+	_ladder_contact_top = is_contact_top
+	_ladder_direction = ladder_direction
+	print ("ladder front: ", _ladder_contact_front, ", ladder top: ", _ladder_contact_top)

@@ -8,28 +8,6 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Spatial",
-"class": "Lever",
-"language": "GDScript",
-"path": "res://interactibles/lever/lever.gd"
-}, {
-"base": "KinematicBody",
-"class": "Player",
-"language": "GDScript",
-"path": "res://player/player.gd"
-}, {
-"base": "StaticBody",
-"class": "Swapper",
-"language": "GDScript",
-"path": "res://map_blocks/swapper.gd"
-} ]
-_global_script_class_icons={
-"Lever": "",
-"Player": "",
-"Swapper": ""
-}
-
 [application]
 
 config/name="StationLayton"
@@ -38,6 +16,7 @@ run/main_scene="res://scene/level4.tscn"
 [autoload]
 
 SwapLogic="*res://swap_logic.gd"
+Global="*res://Global.gd"
 
 [display]
 
