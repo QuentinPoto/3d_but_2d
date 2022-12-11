@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
-[ext_resource path="res://scene/Rotationnal.gd" type="Script" id=2]
-[ext_resource path="res://interactibles/lever.tscn" type="PackedScene" id=3]
+[ext_resource path="res://interactibles/rotationnal/Rotationnal.tscn" type="PackedScene" id=2]
+[ext_resource path="res://interactibles/lever/lever.tscn" type="PackedScene" id=3]
+[ext_resource path="res://yaa.png" type="Texture" id=4]
 [ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=6]
 [ext_resource path="res://map_blocks/swapper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=8]
@@ -11,39 +12,36 @@
 [sub_resource type="ProceduralSky" id=7]
 
 [sub_resource type="Environment" id=8]
-background_mode = 2
+background_mode = 1
 background_sky = SubResource( 7 )
+glow_enabled = true
+glow_intensity = 1.54
+glow_strength = 1.11
+glow_bloom = 1.0
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="EnvLight" type="Node" parent="."]
 
-[node name="Sun" type="OmniLight" parent="EnvLight"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9743, 80.1756, 12.4142 )
-visible = false
-light_color = Color( 0.960784, 0.666667, 0.666667, 1 )
-light_energy = 2.53
-light_bake_mode = 0
-shadow_enabled = true
-shadow_bias = 2.0
-omni_range = 4096.0
-
-[node name="SunUnder" type="OmniLight" parent="EnvLight"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9743, -19.8244, 3.4142 )
-light_energy = 0.3
-light_bake_mode = 0
-shadow_bias = 2.0
-omni_range = 4096.0
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="EnvLight"]
 environment = SubResource( 8 )
 
 [node name="SpotLight" type="SpotLight" parent="EnvLight"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2, 6, 1 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3, 6, 3 )
 light_color = Color( 1, 0.792157, 0.792157, 1 )
-light_energy = 2.0
+light_energy = 4.0
 shadow_enabled = true
+shadow_bias = 1.14
+spot_range = 7.0
+spot_angle = 47.5332
+
+[node name="SpotLightUnder" type="SpotLight" parent="EnvLight"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 3, -6, 3 )
+light_color = Color( 0.803922, 1, 0.792157, 1 )
+light_energy = 4.0
+shadow_enabled = true
+shadow_bias = 1.4
 spot_range = 7.0
 spot_angle = 47.5332
 
@@ -77,23 +75,9 @@ __meta__ = {
 "_editor_floor_": Vector3( 0, 0, 0 )
 }
 
-[node name="Rotationnal" type="GridMap" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3 )
-mesh_library = ExtResource( 6 )
-cell_size = Vector3( 1, 1, 1 )
-cell_center_x = false
-cell_center_y = false
-cell_center_z = false
-collision_layer = 7
-data = {
-"cells": PoolIntArray( 1, 0, 0, 65535, 0, 0, 65536, 0, 0, 1, 1, 0, 65535, 1, 0, 65536, 1, 0, 1, 65535, 0, 65535, 65535, 0, 65536, 65535, 0 )
-}
-script = ExtResource( 2 )
-__meta__ = {
-"_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, -4, 0 )
-}
-rotation_speed = 60
+[node name="Rotationnal" parent="." instance=ExtResource( 2 )]
+is_moving = true
+interaction_tag = "rotate_1"
 
 [node name="Swappers" type="Spatial" parent="."]
 
@@ -105,6 +89,24 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
 [node name="Lever" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 2 )
+
+[node name="wallLeft" type="Sprite3D" parent="."]
+transform = Transform( 0.295, 0, 0, 0, 0.193, 0, 0, 0, 1, -0.5, 0.5, -0.5 )
+centered = false
+modulate = Color( 0.619608, 0.619608, 0.619608, 1 )
+transparent = false
+double_sided = false
+texture = ExtResource( 4 )
+region_rect = Rect2( 500, 0, 0, 0 )
+
+[node name="wallLeft2" type="Sprite3D" parent="."]
+transform = Transform( -1.28949e-08, 0, -1, 0, 0.193, 0, 0.295, 0, -4.37114e-08, 6.5, 0.5, -0.5 )
+centered = false
+modulate = Color( 0.619608, 0.619608, 0.619608, 1 )
+transparent = false
+double_sided = false
+texture = ExtResource( 4 )
+region_rect = Rect2( 500, 0, 0, 0 )
 
 [connection signal="player_action" from="Player" to="Swappers/swapper-1" method="_on_Player_player_action"]
 [connection signal="player_action" from="Player" to="Lever" method="_on_Player_player_action"]

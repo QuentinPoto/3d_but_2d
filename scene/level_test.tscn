@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
-[ext_resource path="res://interactibles/lever.tscn" type="PackedScene" id=2]
+[ext_resource path="res://interactibles/lever/lever.tscn" type="PackedScene" id=2]
 [ext_resource path="res://map_blocks/ladder.tscn" type="PackedScene" id=4]
 [ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=6]
 [ext_resource path="res://map_blocks/swapper.tscn" type="PackedScene" id=7]
@@ -11,8 +11,10 @@
 [sub_resource type="ProceduralSky" id=7]
 
 [sub_resource type="Environment" id=8]
-background_mode = 2
+background_mode = 1
 background_sky = SubResource( 7 )
+background_energy = 0.0
+ambient_light_energy = 0.0
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
