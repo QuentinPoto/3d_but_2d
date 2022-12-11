@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=1]
+[ext_resource path="res://interactibles/rotationnal/Rotationnal.gd" type="Script" id=2]
+
+[node name="Rotationnal" type="GridMap"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3 )
+mesh_library = ExtResource( 1 )
+cell_size = Vector3( 1, 1, 1 )
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+collision_layer = 7
+data = {
+"cells": PoolIntArray( 1, 0, 0, 65535, 0, 0, 65536, 0, 0, 1, 1, 0, 65535, 1, 0, 65536, 1, 0, 1, 65535, 0, 65535, 65535, 0, 65536, 65535, 0 )
+}
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, 0, 0 )
+}
+rotation_speed = 60
