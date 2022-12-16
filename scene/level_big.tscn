@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
 [ext_resource path="res://interactibles/rotationnal/Rotationnal.tscn" type="PackedScene" id=2]
 [ext_resource path="res://interactibles/lever/lever.tscn" type="PackedScene" id=3]
+[ext_resource path="res://interactibles/boutton/button.tscn" type="PackedScene" id=4]
 [ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=6]
 [ext_resource path="res://interactibles/swapper/swapper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=8]
@@ -62,16 +63,6 @@ size = 10.0
 far = 500.0
 script = ExtResource( 9 )
 
-[node name="Rotationnal" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 5 )
-data = {
-"cells": PoolIntArray( 0, 0, 0, 1, 0, 0, 65535, 0, 0, 65535, 1, 0, -65536, 1, 0, -65535, 1, 0, 1, 65535, 0, -65536, 65535, 0, -1, 65535, 0 )
-}
-__meta__ = {
-"_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, -1, 0 )
-}
-
 [node name="GridMap" type="GridMap" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1 )
 mesh_library = ExtResource( 6 )
@@ -96,20 +87,36 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 5 )
 [node name="swapper-2" parent="Swappers" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 0 )
 
-[node name="Levers" type="Spatial" parent="."]
+[node name="Emiters" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0 )
 
-[node name="lever1" parent="Levers" instance=ExtResource( 3 )]
+[node name="lever1" parent="Emiters" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -2, 1 )
 
-[node name="lever2TODOB" parent="Levers" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -2, 1 )
+[node name="Button1" parent="Emiters" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1.5, 1 )
 
-[node name="lever2TODOBouton" parent="Levers" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -2, 2 )
+[node name="Button2" parent="Emiters" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.5, 2 )
+interaction_tags = {
+"rotate": null
+}
 
-[node name="lever3TODOB" parent="Levers" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -2, 6 )
+[node name="Button3" parent="Emiters" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.5, 6 )
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0 )
+
+[node name="Movables" type="Spatial" parent="."]
+
+[node name="Rotationnal" parent="Movables" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 5 )
+data = {
+"cells": PoolIntArray( 0, 0, 0, 1, 0, 0, 65535, 0, 0, 65535, 1, 0, -65536, 1, 0, -65535, 1, 0, 1, 65535, 0, -65536, 65535, 0, -1, 65535, 0 )
+}
+__meta__ = {
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, -1, 0 )
+}
+interaction_tags = [ "rotate" ]

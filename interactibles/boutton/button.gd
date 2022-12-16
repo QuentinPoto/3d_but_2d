@@ -1,12 +1,13 @@
 extends Spatial
 
-signal lever_signal
-var signal_name = "lever_signal"
+signal button_signal
+var signal_name = "button_signal" # TODO avoir le meme nom partout ??
 
 export var interaction_tags: Dictionary
 
 var _is_freeze: bool = false
-
+onready var _initial_box1_y_translation: float = $box1.translation.y
+const Y_MOVE: float = 0.015
 
 func _process(delta):
 	# TODO opti pour qu'il ne refasse pas le calcul a chaque fois ??
@@ -18,11 +19,11 @@ func _input(event):
 		
 func _player_action() -> void:
 	if not _is_freeze and $RayCasts.is_player_contact():
-		$Sprite3D.flip_h = not $Sprite3D.flip_h
-		# emit lever_signal, with bool "is flipped", and interaction_tag
-		emit_signal("lever_signal", $Sprite3D.flip_v, interaction_tags)
+		emit_signal("button_signal", null, interaction_tags)
 		_is_freeze = true
+		$box1.translation.y -= Y_MOVE
 
 ### SIGNALS RECEIVER ###
 func _on_Rotationnal_rotation_end():
 	_is_freeze = false
+	$box1.translation.y = _initial_box1_y_translation

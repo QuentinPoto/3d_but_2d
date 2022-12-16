@@ -239,7 +239,7 @@ transform = Transform( 0.141421, 0.0707107, -0.122474, 0, 0.173205, 0.1, 0.14142
 texture = ExtResource( 1 )
 hframes = 18
 vframes = 3
-frame = 50
+frame = 48
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite3D")
@@ -275,6 +275,7 @@ shape = SubResource( 1 )
 
 [node name="RayCasts" type="Spatial" parent="."]
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0.041, 0 )
+visible = false
 
 [node name="DownLeft" type="RayCast" parent="RayCasts"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, -0.2 )

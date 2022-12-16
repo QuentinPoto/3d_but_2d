@@ -12,3 +12,4 @@ func raycast_collision_distance(raycast: RayCast) -> float:
 		return NAN
 	var origin: float = raycast.get_collision_point().y
 	return raycast.global_transform.origin.y - origin
+

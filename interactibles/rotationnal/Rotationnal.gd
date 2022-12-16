@@ -9,7 +9,11 @@ export var rotation_speed: int = 5
 export var is_moving: bool = false # public si on veut l'activer au debut du niveau
 export var interaction_tags: Array
 
+
 var _rotation_goal: float
+
+func _ready():
+	InteractionLogic.connect_signals(self, $"../../Emiters".get_children())
 
 func _rotate():
 	is_moving = true
@@ -22,23 +26,27 @@ func _physics_process(delta):
 		if not is_moving:
 			emit_signal("rotation_end")
 
+func _signal_handler(_bool, sent_interaction_tag):
+	print(_bool,sent_interaction_tag)
+	if \
+	not is_moving \
+	and InteractionLogic.is_matching_interaction(sent_interaction_tag, interaction_tags):
+		_rotate()
+
+
+
+
+
 func _on_Lever_lever_signal(_is_flipped: bool, sent_interaction_tag: Array):
 	print(_is_flipped)
 	if \
 	not is_moving \
-	and is_matching_interaction(sent_interaction_tag, interaction_tags):
+	and InteractionLogic.is_matching_interaction(sent_interaction_tag, interaction_tags):
 		_rotate()
 
 func _on_pplaque_state_change(pressed: bool, sent_interaction_tag: Array):
 	if \
 	not is_moving \
-	and is_matching_interaction(sent_interaction_tag, interaction_tags) \
+	and InteractionLogic.is_matching_interaction(sent_interaction_tag, interaction_tags) \
 	and pressed:
 		_rotate()
-
-# TODO rendre public !!!
-func is_matching_interaction(emiter_interaction_tags: Array, reciver_interaction_tags: Array):
-	for interaction_tag in emiter_interaction_tags:
-		if reciver_interaction_tags.has(interaction_tag):
-			return true
-	return false

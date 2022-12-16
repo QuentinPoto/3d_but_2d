@@ -1,6 +1,7 @@
 extends StaticBody
 
 signal state_change
+var signal_name = "state_change"
 
 export var interaction_tags: Array
 
