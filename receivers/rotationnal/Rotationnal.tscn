@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=1]
-[ext_resource path="res://interactibles/rotationnal/Rotationnal.gd" type="Script" id=2]
+[ext_resource path="res://receivers/rotationnal/Rotationnal.gd" type="Script" id=2]
 
 [node name="Rotationnal" type="GridMap"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3 )

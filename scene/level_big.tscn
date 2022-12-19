@@ -1,63 +1,30 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
-[ext_resource path="res://interactibles/rotationnal/Rotationnal.tscn" type="PackedScene" id=2]
-[ext_resource path="res://interactibles/lever/lever.tscn" type="PackedScene" id=3]
-[ext_resource path="res://interactibles/boutton/button.tscn" type="PackedScene" id=4]
+[ext_resource path="res://receivers/rotationnal/Rotationnal.tscn" type="PackedScene" id=2]
+[ext_resource path="res://emitters/boutton/button.tscn" type="PackedScene" id=4]
 [ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=6]
-[ext_resource path="res://interactibles/swapper/swapper.tscn" type="PackedScene" id=7]
+[ext_resource path="res://swapper/swapper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scene/Camera.gd" type="Script" id=9]
-
-[sub_resource type="ProceduralSky" id=7]
-
-[sub_resource type="Environment" id=8]
-background_mode = 2
-background_sky = SubResource( 7 )
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="EnvLight" type="Node" parent="."]
+[node name="Cameras" type="Spatial" parent="."]
 
-[node name="Sun" type="OmniLight" parent="EnvLight"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9743, 80.1756, 12.4142 )
+[node name="Up" type="Camera" parent="Cameras"]
+transform = Transform( 0.704919, 0.427216, -0.566194, 0, 0.798257, 0.602317, 0.709288, -0.424584, 0.562707, -8.924, 13.103, 14.222 )
 visible = false
-light_color = Color( 0.960784, 0.666667, 0.666667, 1 )
-light_energy = 2.53
-light_bake_mode = 0
-shadow_enabled = true
-shadow_bias = 2.0
-omni_range = 4096.0
-
-[node name="SunUnder" type="OmniLight" parent="EnvLight"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9743, -19.8244, 3.4142 )
-light_energy = 0.3
-light_bake_mode = 0
-shadow_bias = 2.0
-omni_range = 4096.0
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="EnvLight"]
-environment = SubResource( 8 )
-
-[node name="SpotLight" type="SpotLight" parent="EnvLight"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2, 6, 1 )
-light_color = Color( 1, 0.792157, 0.792157, 1 )
-light_energy = 2.0
-shadow_enabled = true
-spot_range = 7.0
-spot_angle = 47.5332
-
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.707107, 0.353553, -0.612372, 0, 0.866025, 0.499999, 0.707107, -0.353553, 0.612372, -7.961, 11.503, 16.019 )
 projection = 1
 current = true
 size = 10.0
 far = 500.0
 script = ExtResource( 9 )
 
-[node name="CameraDown" type="Camera" parent="."]
-transform = Transform( 0.707107, -0.353553, 0.612373, -7.57103e-08, -0.866025, -0.5, 0.707107, 0.353553, -0.612372, 33, -22, -25.476 )
+[node name="Down" type="Camera" parent="Cameras"]
+transform = Transform( 0.707107, -0.353553, 0.612373, -7.57103e-08, -0.866026, -0.5, 0.707107, 0.353553, -0.612373, 33, -22, -25.476 )
+visible = false
 projection = 1
 size = 10.0
 far = 500.0
@@ -78,6 +45,9 @@ __meta__ = {
 "_editor_floor_": Vector3( 0, 1, 0 )
 }
 
+[node name="Player" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0 )
+
 [node name="Swappers" type="Spatial" parent="."]
 visible = false
 
@@ -87,31 +57,27 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 5 )
 [node name="swapper-2" parent="Swappers" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 0 )
 
-[node name="Emiters" type="Spatial" parent="."]
+[node name="Emitters" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0 )
 
-[node name="lever1" parent="Emiters" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -2, 1 )
-
-[node name="Button1" parent="Emiters" instance=ExtResource( 4 )]
+[node name="Button1" parent="Emitters" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1.5, 1 )
+visible = false
 
-[node name="Button2" parent="Emiters" instance=ExtResource( 4 )]
+[node name="Button2" parent="Emitters" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.5, 2 )
-interaction_tags = {
-"rotate": null
+labelInstructions = {
+"tour": "InstructionName"
 }
 
-[node name="Button3" parent="Emiters" instance=ExtResource( 4 )]
+[node name="Button3" parent="Emitters" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.5, 6 )
+visible = false
 
-[node name="Player" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0 )
+[node name="Receivers" type="Spatial" parent="."]
 
-[node name="Movables" type="Spatial" parent="."]
-
-[node name="Rotationnal" parent="Movables" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 5 )
+[node name="Rotationnal" parent="Receivers" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 0.9, 0, 0, 0, 1, 4, 1, 5 )
 data = {
 "cells": PoolIntArray( 0, 0, 0, 1, 0, 0, 65535, 0, 0, 65535, 1, 0, -65536, 1, 0, -65535, 1, 0, 1, 65535, 0, -65536, 65535, 0, -1, 65535, 0 )
 }
@@ -119,4 +85,5 @@ __meta__ = {
 "_editor_clip_": 0,
 "_editor_floor_": Vector3( 0, -1, 0 )
 }
-interaction_tags = [ "rotate" ]
+label = "tour"
+rotation_speed = 20

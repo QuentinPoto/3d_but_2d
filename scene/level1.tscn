@@ -3,7 +3,7 @@
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
 [ext_resource path="res://map_blocks/ladder/ladder.tscn" type="PackedScene" id=4]
 [ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=6]
-[ext_resource path="res://interactibles/swapper/swapper.tscn" type="PackedScene" id=7]
+[ext_resource path="res://swapper/swapper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scene/Camera.gd" type="Script" id=9]
 

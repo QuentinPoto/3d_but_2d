@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Spatial",
+"class": "Emitter",
+"language": "GDScript",
+"path": "res://emitters/emitter.gd"
+}, {
+"base": "Spatial",
+"class": "Receiver",
+"language": "GDScript",
+"path": "res://receivers/receiver.gd"
+} ]
+_global_script_class_icons={
+"Emitter": "",
+"Receiver": ""
+}
+
 [application]
 
 config/name="StationLayton"
