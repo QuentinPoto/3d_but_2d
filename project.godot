@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Spatial",
 "class": "Emitter",
 "language": "GDScript",
-"path": "res://emitters/emitter.gd"
+"path": "res://emitter.gd"
 }, {
 "base": "Spatial",
 "class": "Receiver",
