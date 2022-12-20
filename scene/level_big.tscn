@@ -60,19 +60,24 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 0 )
 [node name="Emitters" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0 )
 
-[node name="Button1" parent="Emitters" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1.5, 1 )
-visible = false
-
 [node name="Button2" parent="Emitters" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.5, 2 )
 labelInstructions = {
 "tour": "InstructionName"
 }
 
+[node name="Button1" parent="Emitters" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1.5, 1 )
+labelInstructions = {
+"ReceiverLabel": "InstructionName",
+"tour": "InstructionName"
+}
+
 [node name="Button3" parent="Emitters" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.5, 6 )
-visible = false
+labelInstructions = {
+"tour": "InstructionName"
+}
 
 [node name="Receivers" type="Spatial" parent="."]
 

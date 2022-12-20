@@ -34,6 +34,7 @@ run/main_scene="res://scene/level_big.tscn"
 SwapLogic="*res://swap_logic.gd"
 Global="*res://Global.gd"
 InteractionLogic="*res://InteractionLogic.gd"
+Log="*res://Log.gd"
 
 [display]
 
