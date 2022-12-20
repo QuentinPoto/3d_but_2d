@@ -10,7 +10,7 @@ class_name Emitter
 ############################## SIGNAL & VAR ##############################
 
 signal emitter_signal
-export var labelInstructions: Dictionary = { 
+export var labelInstructions_emitter: Dictionary = { # TODO rename ?
 	"ReceiverLabel": "InstructionName" # valeur par defaut
 }
 var _is_freeze: bool = false
@@ -25,7 +25,8 @@ func _process(delta):
 
 func _input(event):
 	if event.is_action_pressed("on_action") and _can_interact():
-		emit_signal("emitter_signal", labelInstructions)
+		emit_signal("emitter_signal", labelInstructions_emitter)
+		# TODO activation plaque de pression ?
 
 
 ############################## .?. ##############################
@@ -51,14 +52,13 @@ func _show_keystroke() -> void:	# TODO opti pour qu'il ne refasse pas le calcul 
 func _can_interact() -> bool:
 	return not _is_freeze and $RayCasts.is_player_contact()
 
-func _share_label(otherLabelInstructions) -> bool:
-	if labelInstructions == otherLabelInstructions:
+func _share_label(otherlabelInstructions_emitter) -> bool:
+	if labelInstructions_emitter == otherlabelInstructions_emitter:
 		return true
-	for label in labelInstructions.keys():
-		if otherLabelInstructions.has(label):
+	for label in labelInstructions_emitter.keys():
+		if otherlabelInstructions_emitter.has(label):
 			return true
 	return false
-
 
 func _freeze() -> void: ## OVERRIDE
 	_is_freeze = true
@@ -66,12 +66,11 @@ func _freeze() -> void: ## OVERRIDE
 func _unfreeze() -> void: ## OVERRIDE
 	_is_freeze = false
 
-
 ############################## SIGNALS RECEIVER ##############################
 # permet de freeze lui-meme et ceux qui partage un des label
-func _on_emitter_signal(otherLabelInstructions):
-	Log.debug(self.name, ": otherLabelInstructions", otherLabelInstructions)
-	if not _share_label(otherLabelInstructions):
+func _on_emitter_signal(otherlabelInstructions_emitter):
+	Log.debug(self.name, ": otherlabelInstructions_emitter", otherlabelInstructions_emitter)
+	if not _share_label(otherlabelInstructions_emitter):
 		return
 	Log.debug(self.name, "freeze by imeself or emitter who share what we want")
 	
@@ -79,11 +78,10 @@ func _on_emitter_signal(otherLabelInstructions):
 
 func _on_movement_end_signal(label): ## OVERRIDE
 	# verifie que ca s'adresse bien a lui
-	if not labelInstructions.has(label):
+	if not labelInstructions_emitter.has(label):
 		return
 	Log.debug("_on_movement_end_signal received !")
-	
-	_unfreeze()
+	_unfreeze() # TODO ca marche plus
 
 
 

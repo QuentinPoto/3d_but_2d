@@ -91,4 +91,3 @@ __meta__ = {
 "_editor_floor_": Vector3( 0, -1, 0 )
 }
 label = "tour"
-rotation_speed = 20

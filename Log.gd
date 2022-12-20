@@ -11,7 +11,8 @@ enum {
 	ERROR
 }
 
-var level = INFO
+#var level = INFO
+var level = DEBUG
 
 func _time(ms:bool = false):
 	var time = OS.get_time()

@@ -1,6 +1,6 @@
 extends Emitter
 
-onready var _initial_box1_y_translation: float = $box1.translation.y
+onready var _initial_box1_y_translation = $box1.translation.y
 const Y_MOVE: float = 0.015
 
 func _freeze() -> void:

@@ -20,19 +20,17 @@ func _ready():
 # Function qui va connecter tout les signaux des emiters a self, le receiver
 func _connect_signals():
 	for emitter in $"../../Emitters".get_children(): # TODO facon plus simple ?
+		# TODO : ne connecter que ceux qui partage le label
+		# et du coup plus besoin de verifeir derrier !
 		emitter.connect("emitter_signal", self, "_signal_handler")
 
 
-func _action(interactionName: String): ## OVERRIDE
-	Log.debug("receiver action for instruction \"", interactionName, "\"")
-	
-	if not instructions.has(interactionName):
-		return
-	Log.debug("there is a matching instruction: ", typeof(instructions[interactionName]), instructions[interactionName])
-	var instruction = instructions[interactionName]
+func _action(instructionName: String): ## OVERRIDE
+	Log.debug("there is a matching instruction: ", typeof(instructions[instructionName]), instructions[instructionName])
+	var instruction = instructions[instructionName]
 	# ERROR handling, meilleur facon ? TODO faire crash le programme
 	if typeof(instruction) != TYPE_ARRAY:
-		Log.error("ERROR, le type d'instruction ne fonctionne pas ! (n'est pas une liste...)")
+		Log.error("Le type d'instruction ne fonctionne pas ! (n'est pas une liste...)")
 		get_tree().quit()
 	if len(instruction) == 0:
 		Log.error("ERROR, la liste est vide !")
@@ -49,13 +47,35 @@ func _action(interactionName: String): ## OVERRIDE
 			pass
 		_:
 			Log.error("La liste contient un type non gere: ", typeof(instruction[0]))
-			return
+			get_tree().quit()
 
 	# TODO -> a la fin du movement
 	emit_signal("movement_end_signal", label)
 
 ############################## SIGNALS RECEIVER ##############################
-func _signal_handler(labelInstructions):
-	Log.debug(["signal received: ", labelInstructions])
-	if not is_moving and labelInstructions.has(label):
-		_action(labelInstructions[label])
+func _signal_handler(labelInstructions_emitter):
+	Log.debug("signal received: ", labelInstructions_emitter)
+	
+	if is_moving:
+		return
+	if not labelInstructions_emitter.has(self.label):
+		return
+	if not instructions.has(labelInstructions_emitter[self.label]):
+		Log.error("Pas d'instruction avec ce nom: ", labelInstructions_emitter[self.label])
+		return
+
+	_action(labelInstructions_emitter[self.label])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
