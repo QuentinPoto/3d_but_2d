@@ -1,6 +1,6 @@
 extends Spatial
 
-func _process(delta):
+func _process(_delta):
 	_swap_camera()
 
 # Gere le swap des deux camera

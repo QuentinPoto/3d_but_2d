@@ -5,24 +5,44 @@ class_name Receiver
 signal movement_end_signal
 
 export var label: String
-export var instructions: Dictionary = { "InstructionName": [3] }
+export var instructions: Dictionary = {}  # { "InstructionName": [3] }
 
 export var movement_speed: int = 5
-export var is_moving: bool = false # TODO|    export si on veut l'activer au debut du niveau
+export var rotation_speed: int = 100
+
+enum {
+	IS_STILL = 0
+	IS_ROTATING = TYPE_INT
+	IS_MOVING = TYPE_VECTOR3
+}
+var physics_state = IS_STILL
+
+var original_angle = rotation.y
+var goal_angle
+
 
 ############################## FUNCTION NATIVE ##############################
 
+
 func _ready():
-	_connect_signals()
+	pass
+
+
+func _physics_process(delta):
+	match physics_state:
+		IS_ROTATING:
+			rotation_degrees.y = move_toward(rotation_degrees.y, goal_angle, delta * rotation_speed)
+			
+			if rotation_degrees.y == goal_angle:
+				physics_state = IS_STILL
+				emit_signal("movement_end_signal", label)
+		IS_MOVING:
+			
+			physics_state = IS_STILL
+			emit_signal("movement_end_signal", label)
+
 
 ############################## .?. ##############################
-
-# Function qui va connecter tout les signaux des emiters a self, le receiver
-func _connect_signals():
-	for emitter in $"../../Emitters".get_children(): # TODO facon plus simple ?
-		# TODO : ne connecter que ceux qui partage le label
-		# et du coup plus besoin de verifeir derrier !
-		emitter.connect("emitter_signal", self, "_signal_handler")
 
 
 func _action(instructionName: String): ## OVERRIDE
@@ -35,43 +55,35 @@ func _action(instructionName: String): ## OVERRIDE
 	if len(instruction) == 0:
 		Log.error("ERROR, la liste est vide !")
 		get_tree().quit()
-
-	match typeof(instruction[0]):
-		TYPE_INT: # rotation
-			# TODO
-			Log.debug("int")
+	
+	var instruction_type = typeof(instruction[0])
+	if not [TYPE_INT, TYPE_VECTOR3].has(instruction_type):
+		Log.error("La liste contient un type non gere: ", instruction_type)
+		get_tree().quit()
+	
+	physics_state = instruction_type  # attribue l'état physique de la pièce selon le type
+	match physics_state:
+		IS_ROTATING:
+			goal_angle = original_angle + instruction[0]\
+			if rotation_degrees.y == original_angle else original_angle
+		IS_MOVING:
 			pass
-		TYPE_VECTOR3: # translation
-			# TODO
-			Log.debug("vec3")
-			pass
-		_:
-			Log.error("La liste contient un type non gere: ", typeof(instruction[0]))
-			get_tree().quit()
 
-	# TODO -> a la fin du movement
-	emit_signal("movement_end_signal", label)
 
 ############################## SIGNALS RECEIVER ##############################
-func _signal_handler(labelInstructions_emitter):
-	Log.debug("signal received: ", labelInstructions_emitter)
+func _signal_handler(commands_dict):
+	Log.info("received signal", commands_dict)
 	
-	if is_moving:
+	if physics_state != IS_STILL: return
+	
+	if not commands_dict.has(self.label): return
+	var command = commands_dict[self.label]
+	
+	if not instructions.has(command):
+		Log.error("Pas d'instruction avec ce nom: ", command)
 		return
-	if not labelInstructions_emitter.has(self.label):
-		return
-	if not instructions.has(labelInstructions_emitter[self.label]):
-		Log.error("Pas d'instruction avec ce nom: ", labelInstructions_emitter[self.label])
-		return
 
-	_action(labelInstructions_emitter[self.label])
-
-
-
-
-
-
-
+	_action(command)
 
 
 

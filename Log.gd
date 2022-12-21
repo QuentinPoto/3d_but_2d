@@ -12,7 +12,7 @@ enum {
 }
 
 #var level = INFO
-var level = DEBUG
+var level = INFO
 
 func _time(ms:bool = false):
 	var time = OS.get_time()

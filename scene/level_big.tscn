@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
 [ext_resource path="res://receivers/rotationnal/Rotationnal.tscn" type="PackedScene" id=2]
+[ext_resource path="res://receivers/receiver.gd" type="Script" id=3]
 [ext_resource path="res://emitters/boutton/button.tscn" type="PackedScene" id=4]
 [ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=6]
 [ext_resource path="res://swapper/swapper.tscn" type="PackedScene" id=7]
@@ -62,22 +63,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0 )
 
 [node name="Button2" parent="Emitters" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.5, 2 )
-labelInstructions = {
-"tour": "InstructionName"
+commands_dict = {
+"tour": "1"
 }
 
 [node name="Button1" parent="Emitters" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1.5, 1 )
-labelInstructions = {
-"ReceiverLabel": "InstructionName",
-"tour": "InstructionName"
-}
 
 [node name="Button3" parent="Emitters" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.5, 6 )
-labelInstructions = {
-"tour": "InstructionName"
-}
 
 [node name="Receivers" type="Spatial" parent="."]
 
@@ -86,8 +80,13 @@ transform = Transform( 1, 0, 0, 0, 0.9, 0, 0, 0, 1, 4, 1, 5 )
 data = {
 "cells": PoolIntArray( 0, 0, 0, 1, 0, 0, 65535, 0, 0, 65535, 1, 0, -65536, 1, 0, -65535, 1, 0, 1, 65535, 0, -65536, 65535, 0, -1, 65535, 0 )
 }
+script = ExtResource( 3 )
 __meta__ = {
 "_editor_clip_": 0,
 "_editor_floor_": Vector3( 0, -1, 0 )
 }
 label = "tour"
+instructions = {
+"1": [ 90 ]
+}
+rotation_speed = 100

@@ -7,13 +7,19 @@ signal rotation_end
 # ancienne method
 export var rotation_a: int = 0
 export var rotation_b: int = 90
+
+#var rotation_degrees: Vector3
+#var rotation_speed: Vector3
 var _rotation_goal: float
+
+var is_moving = false
+
 
 ############################## FUNCTION NATIVE ##############################
 func _physics_process(delta):
 	# ancienne method
 	if is_moving:
-		#rotation_degrees.y = move_toward(rotation_degrees.y, _rotation_goal, delta * rotation_speed)
+		rotation_degrees.y = move_toward(rotation_degrees.y, _rotation_goal, delta * rotation_speed)
 		is_moving = not rotation_degrees.y == _rotation_goal
 		if not is_moving:
 			emit_signal("rotation_end")
