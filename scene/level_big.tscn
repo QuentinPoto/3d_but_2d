@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
 [ext_resource path="res://receivers/rotationnal/Rotationnal.tscn" type="PackedScene" id=2]
 [ext_resource path="res://receivers/receiver.gd" type="Script" id=3]
 [ext_resource path="res://emitters/boutton/button.tscn" type="PackedScene" id=4]
+[ext_resource path="res://emitters/lever/lever.tscn" type="PackedScene" id=5]
 [ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=6]
 [ext_resource path="res://swapper/swapper.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=8]
@@ -61,13 +62,16 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 0 )
 [node name="Emitters" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0 )
 
-[node name="Button2" parent="Emitters" instance=ExtResource( 4 )]
+[node name="Lever1" parent="Emitters" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -2, 0 )
+
+[node name="Button1" parent="Emitters" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.5, 2 )
 commands_dict = {
 "tour": "1"
 }
 
-[node name="Button1" parent="Emitters" instance=ExtResource( 4 )]
+[node name="Button2" parent="Emitters" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -1.5, 1 )
 
 [node name="Button3" parent="Emitters" instance=ExtResource( 4 )]

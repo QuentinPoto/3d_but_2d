@@ -32,7 +32,10 @@ func _input(event):
 
 
 func _connect_signals():
+	print(self.name)
 	for emitter in get_parent().get_children():
+		Log.info(emitter.name)
+		Log.info(emitter.commands_dict)
 		for key in self.commands_dict.keys():
 			if emitter.commands_dict.has(key):
 				# Connecte(Soi -> Emitters)  "emitter_signal"
