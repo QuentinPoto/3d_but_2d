@@ -7,7 +7,7 @@ signal movement_end_signal
 export var label: String
 export var instructions: Dictionary = {}  # { "InstructionName": [3] }
 
-export var movement_speed: int = 5
+export var movement_speed: int = 2
 export var rotation_speed: int = 100
 
 enum {
@@ -20,6 +20,9 @@ var physics_state = IS_STILL
 var original_angle = rotation.y
 var goal_angle
 
+var original_position = translation
+var goal_position
+
 
 ############################## FUNCTION NATIVE ##############################
 
@@ -30,16 +33,22 @@ func _ready():
 
 func _physics_process(delta):
 	match physics_state:
+		
 		IS_ROTATING:
 			rotation_degrees.y = move_toward(rotation_degrees.y, goal_angle, delta * rotation_speed)
-			
 			if rotation_degrees.y == goal_angle:
 				physics_state = IS_STILL
 				emit_signal("movement_end_signal", label)
+		
 		IS_MOVING:
-			
-			physics_state = IS_STILL
-			emit_signal("movement_end_signal", label)
+			# translate((goal_position - translation).ceil(1.0) * delta * movement_speed)
+			# translation = move_toward(translation, goal_position, delta * movement_speed)
+			translation.x = move_toward(translation.x, goal_position.x, delta * movement_speed)
+			translation.y = move_toward(translation.y, goal_position.y, delta * movement_speed)
+			translation.z = move_toward(translation.z, goal_position.z, delta * movement_speed)
+			if translation == goal_position:
+				physics_state = IS_STILL
+				emit_signal("movement_end_signal", label)
 
 
 ############################## .?. ##############################
@@ -67,7 +76,8 @@ func _action(instructionName: String): ## OVERRIDE
 			goal_angle = original_angle + instruction[0]\
 			if rotation_degrees.y == original_angle else original_angle
 		IS_MOVING:
-			pass
+			goal_position = original_position + instruction[0]\
+			if translation == original_position else original_position
 
 
 ############################## SIGNALS RECEIVER ##############################

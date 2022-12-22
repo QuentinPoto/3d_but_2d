@@ -3,24 +3,34 @@
 [ext_resource path="res://emitters/boutton/button.gd" type="Script" id=1]
 [ext_resource path="res://emitters/RayCastPack.tscn" type="PackedScene" id=2]
 
-[node name="Spatial" type="Spatial"]
+[node name="Button" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="Keystroke" type="Label3D" parent="."]
-transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0.155519, 0.967247, 0.155519 )
+transform = Transform( 0.707107, 0.353553, -0.612373, 0, 0.866025, 0.5, 0.707107, -0.353553, 0.612373, -0.8, 1.5, 0.3 )
+pixel_size = 0.02
+alpha_cut = 1
+modulate = Color( 0, 0, 0, 1 )
+outline_modulate = Color( 1, 1, 1, 1 )
 text = "E"
 
+[node name="RayCasts" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [node name="box1" type="CSGBox" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0820581, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0 )
 width = 0.183474
 height = 0.05
 depth = 0.140878
 
 [node name="box2" type="CSGBox" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0457001, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0 )
 width = 0.244873
 height = 0.0487488
 depth = 0.196831
 
-[node name="RayCasts" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, -0.365982, 0 )
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

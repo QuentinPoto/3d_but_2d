@@ -10,7 +10,7 @@ class_name Emitter
 ############################## SIGNAL & VAR ##############################
 
 signal emitter_signal
-export var commands_dict: Dictionary = {}  # {"reciever_label": "receiver_instruction_name"}
+export var commands_dict: Dictionary = {}
 var _locked: bool = false
 
 ############################## FUNCTION NATIVE ##############################
@@ -47,6 +47,13 @@ func _connect_signals():
 			receiver.connect("movement_end_signal", self, "_on_movement_end_signal")
 			# Connecte (Soi -> Receivers)  "emitter_signal"
 			self.connect("emitter_signal", receiver, "_signal_handler")
+		
+		for receiver_child in receiver.get_children():
+			if self.commands_dict.keys().has(receiver_child.label):
+				# Connecte (Receiver_child -> Soi)  "end_signal"
+				receiver_child.connect("movement_end_signal", self, "_on_movement_end_signal")
+				# Connecte (Soi -> Receiver_child)  "emitter_signal"
+				self.connect("emitter_signal", receiver_child, "_signal_handler")
 
 
 func _show_keystroke() -> void:	# TODO opti pour qu'il ne refasse pas le calcul a chaque fois ??
