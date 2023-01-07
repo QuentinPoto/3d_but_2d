@@ -32,7 +32,6 @@ func _input(event):
 
 
 func _connect_signals():
-	print(self.name)
 	for emitter in get_parent().get_children():
 		Log.info(emitter.name)
 		Log.info(emitter.commands_dict)
@@ -41,13 +40,16 @@ func _connect_signals():
 				# Connecte(Soi -> Emitters)  "emitter_signal"
 				emitter.connect("emitter_signal", self, "_on_emitter_signal")
 	
-	for receiver in $"../../Receivers".get_children():
+	for receiver in $"../../Receivers".get_children() + $"../../Swappers".get_children():
 		if self.commands_dict.keys().has(receiver.label):
 			# Connecte (Receivers -> Soi)  "end_signal"
 			receiver.connect("movement_end_signal", self, "_on_movement_end_signal")
 			# Connecte (Soi -> Receivers)  "emitter_signal"
 			self.connect("emitter_signal", receiver, "_signal_handler")
 		
+		#### Connect aussi les enfants...
+		if not receiver.has_child:
+			continue
 		for receiver_child in receiver.get_children():
 			if self.commands_dict.keys().has(receiver_child.label):
 				# Connecte (Receiver_child -> Soi)  "end_signal"
@@ -87,7 +89,7 @@ func _on_emitter_signal(othercommands_dict):
 func _on_movement_end_signal(label): ## OVERRIDE
 	Log.debug("_on_movement_end_signal received !")
 	
-	_unlock() # TODO ca marche plus
+	_unlock()
 
 
 func _lock(): _locked = true

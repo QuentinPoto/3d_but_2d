@@ -1,9 +1,8 @@
-# Swapper : un Block qui swappe
-extends StaticBody
-
+######## Swapper : un Block qui swappe ########
+extends Receiver
 
 func _input(event):
-	if event.is_action_pressed("on_action"):
+	if event.is_action_pressed("on_action") and physics_state == IS_STILL:
 		_player_action()
 
 func _player_action():

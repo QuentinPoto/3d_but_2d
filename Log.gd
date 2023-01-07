@@ -36,3 +36,8 @@ func info(a="",b="",c="",d="",e="",f="",g="",h=""):
 func error(a="",b="",c="",d="",e="",f="",g="",h=""):
 	printerr(_time(), " | ", a, b, c, d, e, f, g, h)	
 	print_stack()
+
+func crash(a="",b="",c="",d="",e="",f="",g="",h=""):
+	printerr(_time(), " | ", a, b, c, d, e, f, g, h)	
+	print_stack()
+	get_tree().quit()

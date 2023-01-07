@@ -7,6 +7,8 @@ signal movement_end_signal
 export var label: String
 export var instructions: Dictionary = {}  # { "InstructionName": [3] }
 
+export var has_child: bool = false # important ! permet de check dans ses enfants pour d'autre receiver
+
 export var movement_speed: int = 2
 export var rotation_speed: int = 100
 
@@ -17,23 +19,23 @@ enum {
 }
 var physics_state = IS_STILL
 
-var original_angle = rotation.y
-var goal_angle
+var original_angle: float
+var goal_angle: float
+var original_position: Vector3
+var goal_position: Vector3
 
-var original_position = translation
-var goal_position
-
+var is_ascending: bool = true # en gros c'est la direction dans laquel il va en suivant la liste
+var instruction_index: int = 0
 
 ############################## FUNCTION NATIVE ##############################
 
 
 func _ready():
-	pass
-
+	original_position = translation
+	original_angle = rotation_degrees.y
 
 func _physics_process(delta):
 	match physics_state:
-		
 		IS_ROTATING:
 			rotation_degrees.y = move_toward(rotation_degrees.y, goal_angle, delta * rotation_speed)
 			if rotation_degrees.y == goal_angle:
@@ -53,31 +55,41 @@ func _physics_process(delta):
 
 ############################## .?. ##############################
 
+func _set_goal(instruction: Array):
+	original_position = translation
+	original_angle = rotation_degrees.y
+	Log.info("original pos and rot: ", original_position, original_angle)
+	var this_instruction = instruction[instruction_index] if is_ascending else - instruction[instruction_index]
+	if physics_state == IS_MOVING:
+		goal_position = original_position + this_instruction
+	elif physics_state == IS_ROTATING:
+		goal_angle = original_angle + this_instruction
+	if is_ascending:
+		instruction_index += 1
+		if instruction_index == len(instruction):
+			is_ascending = false
+			instruction_index -= 1
+	elif not is_ascending:
+		instruction_index -= 1
+		if instruction_index == -1:
+			is_ascending = true
+			instruction_index = 0
 
 func _action(instructionName: String): ## OVERRIDE
 	Log.debug("there is a matching instruction: ", typeof(instructions[instructionName]), instructions[instructionName])
 	var instruction = instructions[instructionName]
-	# ERROR handling, meilleur facon ? TODO faire crash le programme
 	if typeof(instruction) != TYPE_ARRAY:
-		Log.error("Le type d'instruction ne fonctionne pas ! (n'est pas une liste...)")
-		get_tree().quit()
+		Log.crash("Le type d'instruction ne fonctionne pas ! (n'est pas une liste...)")
 	if len(instruction) == 0:
-		Log.error("ERROR, la liste est vide !")
-		get_tree().quit()
+		Log.crash("ERROR, la liste est vide !")
 	
 	var instruction_type = typeof(instruction[0])
 	if not [TYPE_INT, TYPE_VECTOR3].has(instruction_type):
-		Log.error("La liste contient un type non gere: ", instruction_type)
-		get_tree().quit()
-	
+		Log.crash("La liste contient un type non gere: ", instruction_type)
+
 	physics_state = instruction_type  # attribue l'état physique de la pièce selon le type
-	match physics_state:
-		IS_ROTATING:
-			goal_angle = original_angle + instruction[0]\
-			if rotation_degrees.y == original_angle else original_angle
-		IS_MOVING:
-			goal_position = original_position + instruction[0]\
-			if translation == original_position else original_position
+	_set_goal(instruction)
+
 
 
 ############################## SIGNALS RECEIVER ##############################

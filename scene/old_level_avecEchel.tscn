@@ -1,9 +1,8 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
 [ext_resource path="res://receivers/rotationnal/Rotationnal.tscn" type="PackedScene" id=2]
 [ext_resource path="res://emitters/lever/lever.tscn" type="PackedScene" id=3]
-[ext_resource path="res://yaa.png" type="Texture" id=4]
 [ext_resource path="res://emitters/pressure_plaque/pplaque.tscn" type="PackedScene" id=5]
 [ext_resource path="res://map_blocks/texture/new_meshlibrary.tres" type="MeshLibrary" id=6]
 [ext_resource path="res://swapper/swapper.tscn" type="PackedScene" id=7]
@@ -78,8 +77,6 @@ __meta__ = {
 }
 
 [node name="Rotationnal" parent="." instance=ExtResource( 2 )]
-is_moving = true
-interaction_tags = [ "rotate_1" ]
 
 [node name="Swappers" type="Spatial" parent="."]
 
@@ -91,7 +88,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0 )
 
 [node name="Lever" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 2 )
-interaction_tags = [ "rotate_1" ]
 
 [node name="wallLeft" type="Sprite3D" parent="."]
 transform = Transform( 0.295, 0, 0, 0, 0.193, 0, 0, 0, 1, -0.5, 0.5, -0.5 )
@@ -99,7 +95,6 @@ centered = false
 modulate = Color( 0.619608, 0.619608, 0.619608, 1 )
 transparent = false
 double_sided = false
-texture = ExtResource( 4 )
 region_rect = Rect2( 500, 0, 0, 0 )
 
 [node name="wallLeft2" type="Sprite3D" parent="."]
@@ -108,7 +103,6 @@ centered = false
 modulate = Color( 0.619608, 0.619608, 0.619608, 1 )
 transparent = false
 double_sided = false
-texture = ExtResource( 4 )
 region_rect = Rect2( 500, 0, 0, 0 )
 
 [node name="pplaque" parent="." instance=ExtResource( 5 )]
@@ -130,7 +124,6 @@ transform = Transform( 4.37114e-08, -3.82137e-15, 1, -8.74228e-08, -1, 0, 1, -8.
 transform = Transform( 1, -8.74228e-08, -8.74228e-08, -8.74228e-08, -1, 0, -8.74228e-08, 7.64274e-15, -1, 5.11168, -4.28258e-08, 3.38856 )
 
 [connection signal="rotation_end" from="Rotationnal" to="Lever" method="_on_Rotationnal_rotation_end"]
-[connection signal="lever_signal" from="Lever" to="Rotationnal" method="_on_Lever_lever_signal"]
 [connection signal="state_change" from="pplaque" to="Rotationnal" method="_on_pplaque_state_change"]
 [connection signal="ladder_contact_change" from="Ladders/ladder1" to="Player" method="_on_ladder1_ladder_contact_change"]
 [connection signal="ladder_contact_change" from="Ladders/ladder2" to="Player" method="_on_ladder1_ladder_contact_change"]

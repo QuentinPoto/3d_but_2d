@@ -1,7 +1,11 @@
+######## BUTTON ########
 extends Emitter
 
 const Y_MOVE: float = 0.04
+const LOCK_TIME: float = 0.2 # TODO export ??
 
+func _ready():
+	$Timer.wait_time = LOCK_TIME
 
 func _lock() -> void:
 	._lock()
