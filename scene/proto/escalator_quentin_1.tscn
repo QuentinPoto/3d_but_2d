@@ -29,7 +29,7 @@ omni_range = 7.0
 [node name="OmniLight2" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.393425, 14.3695, 9.79306 )
 light_color = Color( 0.92549, 0.94902, 0.8, 1 )
-light_energy = 0.56
+light_energy = 0.245
 shadow_contact = 2.027
 shadow_reverse_cull_face = true
 omni_range = 22.268

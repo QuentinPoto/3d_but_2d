@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="StationLayton"
-run/main_scene="res://scene/level_big.tscn"
+run/main_scene="res://scene/proto/final_boss_benoitj.tscn"
 
 [autoload]
 
